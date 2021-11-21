@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "100134874659",
+    "project_id": "jooy-dadba",
+    "storage_bucket": "jooy-dadba.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:100134874659:android:36ce3206befd82faa94b96",
+        "android_client_info": {
+          "package_name": "com.example.jooy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "100134874659-gb3kga0apqskhhefmtf23ahcjbct6rhj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBEUeGLn-yBkVwN-Ah_inN4fLBjyHW_MoI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "100134874659-gb3kga0apqskhhefmtf23ahcjbct6rhj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
