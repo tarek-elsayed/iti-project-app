@@ -1,5 +1,3 @@
-
-
 import 'package:conditional_builder/conditional_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -30,136 +28,166 @@ class ProfileScreen extends StatelessWidget {
 
         return ConditionalBuilder(
           condition: JoyCubit.get(context).model != null,
-          builder: (context) => Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  Stack(
-                    alignment: Alignment.center,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 0.0, top: 20),
-                        child: Container(
-                          height: 180.0,
-                          width: 180.0,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Colors.white,
-                          ),
-                          child: CircleAvatar(
-                            radius: 60,
-                            backgroundColor: Colors.lightBlue[700],
-                            child: CircleAvatar(
-                              radius: 83,
-                              backgroundImage: image == null
-                                  ? NetworkImage(model.image)
-                                  : FileImage(image),
-                            ),
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 125, top: 150),
-                        child: CircleAvatar(
-                          backgroundColor: Colors.white,
-                          child: IconButton(
-                            icon: Icon(
-                              Icons.camera_alt,
-                              color: Colors.blue,
-                              size: 25,
-                            ),
-                            onPressed: () {
-                              JoyCubit.get(context).getImage(
-                                  nameController.text,
-                                  phoneController.text,
-                                  emailController.text);
-                            },
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                  Form(
-                    key: formKey,
-                    child: Column(
+          builder: (context) => Container(
+            height: 1000,
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  Colors.grey.shade400,
+                  Colors.blue,
+                  Colors.blue.shade900,
+                ],
+              ),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Stack(
+                      alignment: Alignment.center,
                       children: [
-                        SizedBox(
-                          height: 20.0,
+                        Padding(
+                          padding: const EdgeInsets.only(left: 0.0, top: 20),
+                          child: Container(
+                            height: 180.0,
+                            width: 180.0,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.white,
+                            ),
+                            child: CircleAvatar(
+                              radius: 60,
+                              backgroundColor: Colors.lightBlue[700],
+                              child: CircleAvatar(
+                                radius: 83,
+                                backgroundImage: image == null
+                                    ? NetworkImage(model.image)
+                                    : FileImage(image),
+                              ),
+                            ),
+                          ),
                         ),
-                        defaultFormField(
-                          controller: nameController,
-                          type: TextInputType.name,
-                          validation: (String value) {
-                            if (value.isEmpty) {
-                              return 'name must not be empty';
-                            }
+                        Padding(
+                          padding: const EdgeInsets.only(left: 125, top: 150),
+                          child: CircleAvatar(
+                            backgroundColor: Colors.white,
+                            child: IconButton(
+                              icon: Icon(
+                                Icons.camera_alt,
+                                color: Colors.blue,
+                                size: 25,
+                              ),
+                              onPressed: () {
+                                JoyCubit.get(context).getImage(
+                                    nameController.text,
+                                    phoneController.text,
+                                    emailController.text);
+                              },
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                    Form(
+                      key: formKey,
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            height: 20.0,
+                          ),
+                          Container(
+                            color: Colors.grey[500],
+                            child: defaultFormField(
+                              color: Colors.white,
+                              controller: nameController,
+                              type: TextInputType.name,
+                              validation: (String value) {
+                                if (value.isEmpty) {
+                                  return 'name must not be empty';
+                                }
 
-                            return null;
-                          },
-                          labelText: 'Name',
-                          prefix: Icons.person,
-                        ),
-                        SizedBox(
-                          height: 20.0,
-                        ),
-                        defaultFormField(
-                          controller: emailController,
-                          type: TextInputType.emailAddress,
-                          validation: (String value) {
-                            if (value.isEmpty) {
-                              return 'email must not be empty';
-                            }
+                                return null;
+                              },
+                              labelText: 'Name',
+                              prefix: Icons.person,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 20.0,
+                          ),
+                          Container(
+                            color: Colors.grey[500],
+                            child: defaultFormField(
+                              color: Colors.white,
+                              controller: emailController,
+                              type: TextInputType.emailAddress,
+                              validation: (String value) {
+                                if (value.isEmpty) {
+                                  return 'email must not be empty';
+                                }
 
-                            return null;
-                          },
-                          labelText: 'Email Address',
-                          prefix: Icons.email,
-                        ),
-                        SizedBox(
-                          height: 20.0,
-                        ),
-                        defaultFormField(
-                          controller: phoneController,
-                          type: TextInputType.phone,
-                          validation: (String value) {
-                            if (value.isEmpty) {
-                              return 'phone must not be empty';
-                            }
+                                return null;
+                              },
+                              labelText: 'Email Address',
+                              prefix: Icons.email,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 20.0,
+                          ),
+                          Container(
+                            color: Colors.grey[500],
+                            child: defaultFormField(
+                              color: Colors.white,
+                              controller: phoneController,
+                              type: TextInputType.phone,
+                              validation: (String value) {
+                                if (value.isEmpty) {
+                                  return 'phone must not be empty';
+                                }
 
-                            return null;
-                          },
-                          labelText: 'Phone',
-                          prefix: Icons.phone,
-                        ),
-                        SizedBox(
-                          height: 20.0,
-                        ),
-                        defaultButton(
-                          function: () {
-                            if (formKey.currentState.validate()) {
-                              JoyCubit.get(context).updateUserDate(
+                                return null;
+                              },
+                              labelText: 'Phone',
+                              prefix: Icons.phone,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 20.0,
+                          ),
+                          defaultButton(
+                            width: 230,
+                            radius: 10,
+                            function: () {
+                              if (formKey.currentState.validate()) {
+                                JoyCubit.get(context).updateUserDate(
                                   name: nameController.text,
                                   phone: phoneController.text,
                                   email: emailController.text,
-                                 );
-                            }
-                          },
-                          text: 'update',
-                        ),
-                        SizedBox(
-                          height: 20.0,
-                        ),
-                        defaultButton(
-                          function: () {
-                            signOut(context);
-                          },
-                          text: 'Logout',
-                        ),
-                      ],
-                    ),
-                  )
-                ],
+                                );
+                              }
+                            },
+                            text: 'update',
+                          ),
+                          SizedBox(
+                            height: 20.0,
+                          ),
+                          defaultButton(
+                            width: 190,
+                            radius: 10,
+                            function: () {
+                              signOut(context);
+                            },
+                            text: 'Logout',
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
               ),
             ),
           ),

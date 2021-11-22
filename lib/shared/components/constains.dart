@@ -1,4 +1,5 @@
 
+import 'package:flutter/material.dart';
 import 'package:jooy/layout/joy_app/cubit/cubit.dart';
 import 'package:jooy/modules/login/login_screen.dart';
 import 'package:jooy/shared/network/local/cache_helper.dart';
@@ -15,6 +16,12 @@ void signOut(context) {
     }
   });
 }
-bool serialNum=false;
+// bool serialNum=false;
+String serialNum;
 var random;
 String uId = '';
+String HotelID = '';
+int tarek;
+bool disable=false;
+String book='Book Now';
+Color color=Colors.white;

@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -54,10 +55,8 @@ class JoyCubit extends Cubit<JoyStates> {
       print(value.data());
       model = UserModel.fromJson(value.data());
       imageUrl = model.image;
-
       print('555');
-      // FavFromUser = model.favHotel;
-      // print(FavFromUser);
+      getBarCode(HotelID);
       emit(JoyGetUserSuccessStates());
     }).catchError((error) {
       emit(JoyGetUserErrorStates(error.toString()));
@@ -87,17 +86,19 @@ class JoyCubit extends Cubit<JoyStates> {
       emit(JoyErrorGetAllHotelsState(error.toString()));
     });
   }
+
   HotelModel hotelModel;
 
   void getHotels(id, context) {
+    // HotelID = id;
     print("LLL");
     print(id);
     emit(JoyLoadingGetHotelsState());
 
     FirebaseFirestore.instance.collection("Hotels").doc(id).get().then((value) {
       hotelModel = HotelModel.fromJson(value.data());
-
-      navigateTo(context, HotelDetailScreen(hotelModel));
+      emit(JoySuccessGetHotelsState(hotelModel));
+      navigateTo(context, HotelDetailScreen(hotelModel, model));
     }).catchError((error) {
       emit(JoyErrorGetHotelsState(error.toString()));
     });
@@ -139,69 +140,67 @@ class JoyCubit extends Cubit<JoyStates> {
     });
   }
 
-
-
   // changeFav(id) {
   //   if (hotelModel.fav) {
   //     hotelModel.fav = false;
   //   }
   // }
 
-  void updateHotel({
-    @required String id,
-    @required String hotelName,
-    @required String details,
-    @required String description,
-    @required List images,
-    @required bool fav,
-  }) {
-    emit(JoySetHotelFavouritesState());
-    // HotelModel model = HotelModel(
-    //     id: id,
-    //     description: description,
-    //     details: details,
-    //     hotelName: hotelName,
-    //     images: images,
-    //     fav: fav);
-    print("Model11");
-    // print(model.fav);
-    FirebaseFirestore.instance
-        .collection("Hotels")
-        .doc(id)
-        .update(model.toMap())
-        .then((value) {
-      emit(JoySetHotelFavouritesSuccessState());
-      getAllHotel();
-    }).catchError(onError);
-  }
+  // void updateHotel({
+  //   @required String id,
+  //   @required String hotelName,
+  //   @required String details,
+  //   @required String description,
+  //   @required List images,
+  //   @required bool fav,
+  // }) {
+  //   emit(JoySetHotelFavouritesState());
+  //   // HotelModel model = HotelModel(
+  //   //     id: id,
+  //   //     description: description,
+  //   //     details: details,
+  //   //     hotelName: hotelName,
+  //   //     images: images,
+  //   //     fav: fav);
+  //   print("Model11");
+  //   // print(model.fav);
+  //   FirebaseFirestore.instance
+  //       .collection("Hotels")
+  //       .doc(id)
+  //       .update(model.toMap())
+  //       .then((value) {
+  //     emit(JoySetHotelFavouritesSuccessState());
+  //     getAllHotel();
+  //   }).catchError(onError);
+  // }
 
-  void updateRest({
-    @required String name,
-    @required String id,
-    @required String details,
-    @required String description,
-    @required List images,
-    @required bool fav,
-  }) {
-    emit(JoySetRestaurantFavouritesState());
-    // RestaurantModel model = RestaurantModel(
-    //     id: id,
-    //     description: description,
-    //     details: details,
-    //     name: name,
-    //     images: images,
-    //     fav: fav);
-    print("Model11");
-    // print(model.fav);
-    FirebaseFirestore.instance
-        .collection("Restaurants")
-        .doc(id)
-        .update(model.toMap())
-        .then((value) {
-      emit(JoySetRestaurantFavouritesSuccessState());
-      getAllHotel();
-    }).catchError(onError);
-  }
+  // void updateRest({
+  //   @required String name,
+  //   @required String id,
+  //   @required String details,
+  //   @required String description,
+  //   @required List images,
+  //   @required bool fav,
+  // }) {
+  //   emit(JoySetRestaurantFavouritesState());
+  //   // RestaurantModel model = RestaurantModel(
+  //   //     id: id,
+  //   //     description: description,
+  //   //     details: details,
+  //   //     name: name,
+  //   //     images: images,
+  //   //     fav: fav);
+  //   print("Model11");
+  //   // print(model.fav);
+  //   FirebaseFirestore.instance
+  //       .collection("Restaurants")
+  //       .doc(id)
+  //       .update(model.toMap())
+  //       .then((value) {
+  //     emit(JoySetRestaurantFavouritesSuccessState());
+  //     getAllHotel();
+  //   }).catchError(onError);
+  // }
 
   File profileImage;
   var picker = ImagePicker();
@@ -245,7 +244,6 @@ class JoyCubit extends Cubit<JoyStates> {
     @required String name,
     @required String phone,
     @required String email,
-    List favs,
   }) {
     UserModel userModel = UserModel(
       phone: phone,
@@ -357,5 +355,97 @@ class JoyCubit extends Cubit<JoyStates> {
     }).catchError((error) {
       emit(JoyErrorGetRentState(error.toString()));
     });
+  }
+
+  createSerialNum(ID) {
+    serialNum = ID;
+    print("serialNumber $serialNum");
+    return serialNum;
+  }
+
+  generateBarCode(BuildContext context) {
+    random = Random().nextDouble() * 555555555555;
+    random = (random.toInt() % random).toInt();
+    tarek=random;
+    print("random ${random.toInt()}");
+    return random;
+  }
+
+  List<Barcodes> hotelBarcodes = [];
+  Barcodes hotelBarcode;
+
+  safeBarcode(barCode, SerialNum) async {
+    // generateBarCode()
+    hotelBarcode = Barcodes(barcode: barCode, serialNum: SerialNum);
+    if (model.barcodes != null) {
+      hotelBarcodes.add(hotelBarcode);
+    } else {
+      model.barcodes = model.barcodes;
+    }
+    // z.add(x);
+    UserModel userModel = UserModel(
+      phone: model.phone,
+      name: model.name,
+      email: model.email,
+      image: model.image,
+      uId: model.uId,
+      isEmailVerified: model.isEmailVerified,
+      barcodes: hotelBarcodes,
+    );
+    FirebaseFirestore.instance
+        .collection('Users')
+        .doc(uId)
+        .set(userModel.toMap())
+        .then((value) async {
+      updateUserDate(name: model.name, phone: model.phone, email: model.email);
+
+      // await getBarCode(SerialNum);
+      // showBarcode(serialNum);
+    });
+  }
+
+  getBarCode(String id) {
+    int barcode;
+    for (int i = 0; i < model.barcodes.length; i++) {
+      if (model.barcodes[i].serialNum == id) {
+        barcode = model.barcodes[i].barcode;
+        tarek = barcode;
+        print('&&&& $barcode');
+      }
+    }
+    return barcode;
+  }
+
+  checkBarcode(String id) {
+    disable = false;
+    book = 'Book Now';
+    color = Colors.white;
+    tarek=null;
+    for (int i = 0; i < model.barcodes.length; i++) {
+      if (model.barcodes[i].serialNum == id) {
+        if (model.barcodes[i].barcode == null) {
+          disable = false;
+          book = 'Book Now';
+          color = Colors.white;
+          tarek=null;
+          print('BBBB');
+        }
+        else {
+          disable = true;
+          book = 'Booked';
+          color = Colors.grey[300];
+          print('DDDD');
+          tarek=model.barcodes[i].barcode;
+          break;
+        }
+      }
+       else {
+        disable = false;
+        book = 'Book Now';
+        color = Colors.white;
+        print('KKKKKK');
+        tarek = null;
+      }
+    }
   }
 }

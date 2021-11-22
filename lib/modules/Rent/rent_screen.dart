@@ -19,21 +19,24 @@ class RentScreen extends StatelessWidget {
           condition: rent.length > 0,
           builder: (context) => Container(
             // color: Colors.yellow,
-            child: SingleChildScrollView(
-                physics: BouncingScrollPhysics(),
-                child: GridView.count(
-                  shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
-                  crossAxisSpacing: 1.0,
-                  mainAxisSpacing: 1.0,
-                  childAspectRatio: 1 / 1.79,
-                  scrollDirection: Axis.vertical,
-                  crossAxisCount: 2,
-                  children: List.generate(
-                    rent.length,
-                    (index) => buildCard(rent[index], context),
+            child: Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      Colors.grey.shade400,
+                      Colors.blue,
+                      Colors.blue.shade900,
+                    ],
                   ),
-                )),
+                ),
+                child: ListView.builder(
+                    physics: BouncingScrollPhysics(),
+                    itemCount: rent.length,
+                    itemBuilder: (context, index) {
+                      return buildCard(rent[index], context);
+                    })),
           ),
           fallback: (context) => Center(child: CircularProgressIndicator()),
         );
@@ -43,100 +46,86 @@ class RentScreen extends StatelessWidget {
 
   Widget buildCard(RentModel rentModel, context) {
     // var cubit = JoyCubit.get(context);
-    return Container(
-      child: Center(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10.0),
-          child: Column(
-            children: [
-              Container(
-                child: Card(
-                  clipBehavior: Clip.antiAlias,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20.0),
-                  ),
-                  child: InkWell(
-                    onTap: () {
-                      JoyCubit.get(context).getRent(rentModel.id, context);
-                    },
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Stack(
-                          alignment: Alignment.bottomLeft,
-                          children: [
-                            Image.network(
-                              "${rentModel.imagePath}",
-                              height: 200,
-                              width: double.infinity,
-                              fit: BoxFit.fill,
-                            ),
-                            Container(
-                              width: double.infinity,
-                              color: Colors.black.withOpacity(.8),
-                              child: Text(
-                                "${rentModel.serviceName}",
-                                style: TextStyle(
-                                    color: Colors.white, fontSize: 28),
-                              ),
-                            ),
-                          ],
+    return Card(
+      margin: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(15.0),
+      ),
+      elevation: 15,
+      child: InkWell(
+        onTap: () {
+          // JoyCubit.get(context).checkBarcode(hotelModel.id);
+          // HotelID=hotelModel.id;
+          // print("hotelModel ${hotelModel.id}");
+          // JoyCubit.get(context).createSerialNum(hotelModel.id);
+          // cubit.getHotels(hotelModel.id, context);
+        },
+        child: Container(
+            height: 200,
+            child: Row(
+              // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  child: Container(
+                    margin: EdgeInsets.all(10.0),
+                    width: MediaQuery.of(context).size.width * 0.39,
+                    height: 200,
+                    decoration: BoxDecoration(
+                        image: DecorationImage(
+
+                          image: NetworkImage('${rentModel.imagePath}'),
+                          fit: BoxFit.fill,
                         ),
-                        Padding(
-                          padding: EdgeInsets.all(10.0),
-                          child: Column(
+                        borderRadius: BorderRadius.circular(15)),
+                  ),
+                ),
+                Expanded(
+                  child: Container(
+                    child: Padding(
+                      padding: const EdgeInsets.all(15.0),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.max,
+                        // mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "${rentModel.serviceName}",
+                            // textDirection: TextDirection.rtl,
+                            style: TextStyle(
+                              color: Colors.blue,
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+
+                          ),
+                          Text("${rentModel.serviceDescripition}",
+                              // textDirection: TextDirection.rtl,
+                              maxLines: 2,
+                              style: TextStyle(
+                                color: Colors.yellow,
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              )),
+                          Spacer(),
+                          Row(
                             children: [
-                              Text("${rentModel.serviceName}"),
-                              // Text("${rentModel.serviceDescripition}"),
-                              // Text("Hi"),
+                              TextButton(
+                                onPressed: (){},
+                                child: Text('See More',
+                                  style: TextStyle(fontSize: 16),),
+                              ),
+                              Spacer(),
+                              Icon(Icons.favorite)
                             ],
                           ),
-                        ),
-                        ButtonBar(
-                          children: [
-                            TextButton(
-                                onPressed: () {},
-                                child: Text(
-                                  "See More",
-                                  style: TextStyle(
-                                      color: Colors.lightBlue[900],
-                                      ),
-                                ),
-                            ),
-                            Spacer(),
-                            IconButton(
-                              onPressed: () {
-                                // if (hotelModel.fav == true) {
-                                //   hotelModel.fav = false;
-                                // } else {
-                                //   hotelModel.fav = true;
-                                // }
-                                //
-                                // cubit.updateHotel(
-                                //   id: hotelModel.id,
-                                //   hotelName: hotelModel.hotelName,
-                                //   details: hotelModel.details,
-                                //   description: hotelModel.description,
-                                //   images: hotelModel.images,
-                                //   fav: hotelModel.fav,
-                                // );
-                              },
-                              icon: CircleAvatar(
-                                radius: 18.0,
-                                backgroundColor: Colors.lightBlue[900],
-                                child: Icon(Icons.favorite_outline),
-                              ),
-                            )
-                          ],
-                        )
-                      ],
+
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
-          ),
+              ],
+            ),
         ),
       ),
     );

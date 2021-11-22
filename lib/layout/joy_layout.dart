@@ -12,18 +12,11 @@ class JoyLayout extends StatelessWidget {
       builder: (context, state) {
         var cubit = JoyCubit.get(context);
         return Scaffold(
-
-          // drawer: Drawer(),
+          drawer: drawer(),
           appBar: AppBar(
             elevation: 0,
             backgroundColor: Color(0xffF9F9F9),
-            leading: IconButton(
-              icon: Icon(
-                Icons.arrow_back,
-                color: Color(0xffF9F9F9),
-              ),
-              onPressed: () {},
-            ),
+
             centerTitle: true,
             title: Text(
               'JOY',
@@ -124,74 +117,72 @@ class JoyLayout extends StatelessWidget {
       },
     );
   }
+
+  Widget drawer(){
+    return Drawer(
+      child:Container(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [
+            Colors.grey.shade400,
+            Colors.blue,
+            Colors.blue.shade900,
+          ],
+        ),
+      ),
+
+
+      padding: EdgeInsets.symmetric(vertical: 15),
+      child: Column(
+        // mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            CircleAvatar(
+              radius: 50,
+              backgroundColor: Colors.brown,
+              // backgroundImage: AssetImage(''),
+            ),
+            ListTile(
+                leading: Icon(Icons.home),
+                title: Text(
+                  "home page",
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold),
+                )),
+
+            ListTile(
+                leading: Icon(Icons.home),
+                title: Text(
+                  "setting",
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold),
+                )),
+            ListTile(
+                leading: Icon(Icons.home),
+                title: Text(
+                  "About",
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold),
+                )),
+            ListTile(
+                leading: Icon(Icons.home),
+                title: Text(
+                  "logout",
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold),
+                )),
+          ]),
+      )
+    );
+  }
 }
 
-/*
-BlocConsumer<JoyCubit, JoyStates>(
-      listener: (context, state) {},
-      builder: (context, state) {
-        return Scaffold(
-          appBar: AppBar(
-            backgroundColor: Colors.white,
-            title: Text(
-              "Joy",
-              style: TextStyle(color: Colors.black),
-            ),
-          ),
-          body: ConditionalBuilder(
-            condition: JoyCubit.get(context).model != null,
-            builder: (context) {
-              var model = JoyCubit.get(context).model;
-              return Column(
-                children: [
-                  if (!model.isEmailVerified)
-                    Container(
-                      color: Colors.amber.withOpacity(.9),
-                      height: 50.0,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                        child: Row(
-                          children: [
-                            Icon(
-                              Icons.info,
-                              color: Colors.red,
-                            ),
-                            SizedBox(
-                              width: 10.0,
-                            ),
-                            Expanded(
-                              child: Text(
-                                "Please verify email",
-                              ),
-                            ),
-                            SizedBox(
-                              width: 20.0,
-                            ),
-                            defaultTextButton(
-                              text: "send",
-                              function: () {
-                                FirebaseAuth.instance.currentUser
-                                    .sendEmailVerification()
-                                    .then((value) {
-                                  showToast(
-                                    text: "check your mail",
-                                    state: ToastState.SUCCESS,
-                                  );
-                                }).catchError((error) {});
-                              },
-                            )
-                          ],
-                        ),
-                      ),
-                    )
-                ],
-              );
-            },
-            fallback: (context) => Center(
-              child: CircularProgressIndicator(),
-            ),
-          ),
-        );
-      },
-    );
- */

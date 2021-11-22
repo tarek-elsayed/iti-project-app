@@ -5,7 +5,6 @@ import 'package:jooy/layout/joy_app/cubit/cubit.dart';
 import 'package:jooy/modules/login/cubit/states.dart';
 import 'package:jooy/shared/components/constains.dart';
 
-
 class JoyLoginCubit extends Cubit<JoyLoginStates> {
   JoyLoginCubit() : super(JoyLoginInitialState());
 
@@ -14,7 +13,6 @@ class JoyLoginCubit extends Cubit<JoyLoginStates> {
   void userLogin({
     @required String email,
     @required String password,
-
   }) {
     emit(JoyLoginLoadingState());
     FirebaseAuth.instance
@@ -26,8 +24,11 @@ class JoyLoginCubit extends Cubit<JoyLoginStates> {
               emit(JoyLoginSuccessState(value.user.uid)),
               print(value.user.email),
               print(value.user.uid),
-          uId=value.user.uid,
-        JoyCubit()..getUserData()..getAllHotel()..getAllRestaurant(),
+              uId = value.user.uid,
+              JoyCubit()
+                ..getUserData()
+                ..getAllHotel()
+                ..getAllRestaurant(),
             })
         .catchError((error) => {
               emit(JoyLoginErrorState(error.toString())),

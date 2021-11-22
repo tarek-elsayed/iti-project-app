@@ -14,20 +14,24 @@ Widget defaultButton({
   @required Function function,
 }) {
   return Container(
-    height: 40.0,
+
+    height: 50.0,
     width: width,
     child: MaterialButton(
       onPressed: function,
       child: Text(
         isUpperCase ? text.toUpperCase() : text,
-        style: TextStyle(color: Colors.white),
+        style: TextStyle(color: Colors.white,fontSize: 20),
       ),
     ),
     decoration: BoxDecoration(
-      color: Colors.lightBlue[900],
+      // color: Colors.blue[900],
+      // color: Color(0xff061c8c),
+      color: Color(0xff14598f),
       borderRadius: BorderRadius.circular(
         radius,
       ),
+      border: Border.all(color: Colors.white54,width: 4)
     ),
   );
 }
@@ -40,6 +44,9 @@ Widget defaultTextButton({
     onPressed: function,
     child: Text(
       text.toUpperCase(),
+       style: TextStyle(
+         color: Colors.white
+       ),
     ),
   );
 
@@ -50,6 +57,7 @@ Widget defaultFormField({
   @required Function validation,
   @required String labelText,
   @required IconData prefix,
+  Color color,
   Function onTap,
   Function onSubmit,
   Function onChange,
@@ -59,23 +67,39 @@ Widget defaultFormField({
   bool isClickable = true,
 }) =>
     TextFormField(
+      style: TextStyle(
+        fontSize: 20.0
+      ),
       onFieldSubmitted: onSubmit,
       onChanged: onChange,
       enabled: isClickable,
       validator: validation,
       controller: controller,
       decoration: InputDecoration(
+
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: Colors.white,width: 2)
+        ),
         prefixIcon: Icon(
           prefix,
+          size: 28,
+          color: Colors.black87,
         ),
         suffixIcon:
-            IconButton(icon: Icon(suffixIcon), onPressed: suffixIconPress),
+            IconButton(icon: Icon(suffixIcon,color: Colors.black,), onPressed: suffixIconPress,),
         labelText: labelText,
-        border: OutlineInputBorder(),
+        labelStyle: TextStyle(fontSize: 26,color: color,fontWeight: FontWeight.bold),
+        border: OutlineInputBorder(
+            // borderSide: BorderSide(color: Colors.white,width: 2)
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: color,width: 2)
+        ),
       ),
       keyboardType: type,
       obscureText: obscureText,
       onTap: onTap,
+
     );
 
 Widget buildTaskItem(Map model, context) => Dismissible(
