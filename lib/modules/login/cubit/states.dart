@@ -8,6 +8,7 @@ class JoyLoginSuccessState extends JoyLoginStates {
   final String uId;
 
   JoyLoginSuccessState(this.uId);
+
 }
 
 class JoyLoginErrorState extends JoyLoginStates {

@@ -11,6 +11,7 @@ class RentModel {
   bool offerd;
   String offerRatio;
   Timestamp createdAt;
+  String brandName;
   //to Do list
   String imagePath ;
 
@@ -26,6 +27,7 @@ class RentModel {
     this.createdAt,
     this.createdBy,
     this.offerd,
+    this.brandName,
   });
 
   RentModel.fromJson(Map<String, dynamic> json, [String ID]) {
@@ -39,6 +41,7 @@ class RentModel {
     createdBy=json['createdBy'];
     offerd=json['offerd'];
     serviceDescripition=json['serviceDescripition'];
+    brandName=json['brandName'];
 
   }
 

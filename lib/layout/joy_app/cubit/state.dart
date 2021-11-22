@@ -3,13 +3,18 @@ import 'package:jooy/models/Restaurant_model.dart';
 import 'package:jooy/models/hotel_model.dart';
 import 'package:jooy/models/places_model.dart';
 import 'package:jooy/models/rent_model.dart';
+import 'package:jooy/models/user_model.dart';
 
 abstract class JoyStates{}
 
 
 class JoyInitialStates extends JoyStates{}
 
-class JoyGetUserSuccessStates extends JoyStates{}
+class JoyGetUserSuccessStates extends JoyStates{
+  final UserModel userModel;
+
+  JoyGetUserSuccessStates(this.userModel);
+}
 
 class JoyGetUserLoadingStates extends JoyStates{}
 

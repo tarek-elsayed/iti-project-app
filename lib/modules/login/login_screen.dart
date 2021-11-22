@@ -102,6 +102,7 @@ class LoginScreen extends StatelessWidget {
                                 JoyLoginCubit.get(context).userLogin(
                                   email: email.text,
                                   password: password.text,
+                                  context: context,
                                 );
                                 JoyCubit()
                                   ..getUserData()
@@ -130,7 +131,9 @@ class LoginScreen extends StatelessWidget {
                                   JoyLoginCubit.get(context).userLogin(
                                     email: email.text,
                                     password: password.text,
+                                    context: context
                                   );
+                                  JoyCubit.get(context)..getUserData();
                                 }
                               },
                               isUpperCase: true,

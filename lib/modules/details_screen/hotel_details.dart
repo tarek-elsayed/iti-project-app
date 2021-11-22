@@ -22,12 +22,12 @@ class HotelDetailScreen extends StatefulWidget {
   HotelModel hotelModel;
   UserModel userModel;
 
-  HotelDetailScreen(this.hotelModel,this.userModel);
+  HotelDetailScreen(this.hotelModel, this.userModel);
 
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
-    return _HotelDetailScreen(hotelModel,userModel);
+    return _HotelDetailScreen(hotelModel, userModel);
   }
 }
 
@@ -36,341 +36,343 @@ class _HotelDetailScreen extends State<HotelDetailScreen> {
   HotelModel hotelModel;
   UserModel userModel;
 
-  _HotelDetailScreen(this.hotelModel,this.userModel);
-@override
+  _HotelDetailScreen(this.hotelModel, this.userModel);
+
+  @override
   void initState() {
     // TODO: implement initState
     super.initState();
     // JoyCubit.get(context).checkBarcode(hotelModel.id);
   }
+
   // var scaffoldKey = GlobalKey<ScaffoldState>();
   // var random;
   // bool code = false;
-
 
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
 
-    return BlocConsumer<JoyCubit,JoyStates>(
-     listener: (context,state ){},
-      builder: (context,state){
-       return  Scaffold(
-         appBar: AppBar(
-           title: Text(
-             "JOY",
-             style: TextStyle(
-               fontSize: 28,
-               fontWeight: FontWeight.bold,
-               color: Colors.black,
-             ),
-           ),
-           centerTitle: true,
-           leading: IconButton(
-             icon: Icon(
-               Icons.arrow_back,
-               color: Colors.black,
-               size: 28,
-             ),
-             onPressed: () {
-               Navigator.pop(context);
-             },
-           ),
-           elevation: 0,
-           backgroundColor: Colors.grey[300],
-         ),
-         // backgroundColor: Colors.grey.shade100,
-         body: Container(
-           height: 1000,
-           decoration: BoxDecoration(
-             // color: Colors.red,
-             gradient: LinearGradient(
-               colors: [
-                 Colors.grey[300],
-                 Color(0xff2B688A),
-                 Colors.lightBlue[900],
-               ],
-               begin: Alignment.topLeft,
-               end: Alignment.bottomRight,
-             ),
-           ),
-           child: SingleChildScrollView(
-             child: Column(
-               children: [
-                 if(tarek!=null)
-                 Container(
-                   color: Colors.blue,
-                   height: 60.0,
-                   child: Padding(
-                     padding: EdgeInsets.symmetric(horizontal: 20.0),
-                     child: ListTile(
-                       title: Text(
-                         'You already reserved ',
-                         style: TextStyle(
-                           fontSize: 20,
-                           fontWeight: FontWeight.bold,
-                           color: Colors.white,
-                         ),
-                       ),
-                       // subtitle: Text(
-                       //   '$random',
-                       //   style: TextStyle(
-                       //       color: Colors.black, fontWeight: FontWeight.bold),
-                       // ),
-                       leading: Icon(
-                         Icons.check_circle,
-                         color: Colors.white,
-                       ),
-                       trailing: RaisedButton(
-                         child: Text(
-                           'Show',
-                           style: TextStyle(fontSize: 16.0),
-                         ),
-                         onPressed: () {
-                           setState(() {
-                             showDialog(
-                               context: context,
-                               builder: (context) => AlertDialog(
-                                 title: ListTile(
-                                   leading: Icon(Icons.check_circle),
-                                   title: Text('Your BarCode'),
-                                   trailing: Padding(
-                                     padding: const EdgeInsets.only(left:8.0),
-                                     child: IconButton(
-                                       padding: EdgeInsets.only(left: 10.0),
-                                       icon: Icon(Icons.delete_forever),
-                                       onPressed: (){
-                                         setState(() {
-                                           random=null;
-                                           print("QQQQQ $random");
-                                           Navigator.pop(context);
-                                         });
+    return BlocConsumer<JoyCubit, JoyStates>(
+      listener: (context, state) {},
+      builder: (context, state) {
+        return Scaffold(
+          appBar: AppBar(
+            title: Text(
+              "JOY",
+              style: TextStyle(
+                fontSize: 28,
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
+              ),
+            ),
+            centerTitle: true,
+            leading: IconButton(
+              icon: Icon(
+                Icons.arrow_back,
+                color: Colors.black,
+                size: 28,
+              ),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+            elevation: 0,
+            backgroundColor: Colors.grey[300],
+          ),
+          // backgroundColor: Colors.grey.shade100,
+          body: Container(
+            height: 1000,
+            decoration: BoxDecoration(
+              // color: Colors.red,
+              gradient: LinearGradient(
+                colors: [
+                  Colors.grey[300],
+                  Color(0xff2B688A),
+                  Colors.lightBlue[900],
+                ],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
+            ),
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  if (tarek != null)
+                    Container(
+                      color: Colors.blue,
+                      height: 60.0,
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 20.0),
+                        child: ListTile(
+                          title: Text(
+                            'You already reserved ',
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
+                          ),
+                          // subtitle: Text(
+                          //   '$random',
+                          //   style: TextStyle(
+                          //       color: Colors.black, fontWeight: FontWeight.bold),
+                          // ),
+                          leading: Icon(
+                            Icons.check_circle,
+                            color: Colors.white,
+                          ),
+                          trailing: RaisedButton(
+                            child: Text(
+                              'Show',
+                              style: TextStyle(fontSize: 16.0),
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                showDialog(
+                                  context: context,
+                                  builder: (context) => AlertDialog(
+                                    title: ListTile(
+                                      leading: Icon(Icons.check_circle),
+                                      title: Text('Your BarCode'),
+                                      trailing: Padding(
+                                        padding:
+                                            const EdgeInsets.only(left: 8.0),
+                                        child: IconButton(
+                                          padding: EdgeInsets.only(left: 10.0),
+                                          icon: Icon(Icons.delete_forever),
+                                          onPressed: () {
+                                            setState(() {
+                                              JoyCubit.get(context)
+                                                  .deleteBarCode(HotelID);
+                                              Navigator.pop(context);
+                                              // random=null;
+                                              // print("QQQQQ $random");
+                                              // Navigator.pop(context);
+                                            });
+                                          },
+                                        ),
+                                      ),
+                                    ),
+                                    content: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Text(
+                                            "$tarek",
+                                          ),
+                                        ]),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                        child: Text("OK"),
+                                      )
+                                    ],
+                                  ),
+                                );
+                              });
+                            },
+                            color: Colors.white,
+                            textColor: Colors.black,
+                          ),
+                        ),
+                      ),
+                    ),
+                  Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20)),
+                      height: 250,
+                      child: imageSlider(hotelModel)),
+                  SingleChildScrollView(
+                    child: Padding(
+                      padding: const EdgeInsets.all(15.0),
+                      child: Container(
+                        decoration: BoxDecoration(
+                            border:
+                                Border.all(width: 2, color: Colors.grey[700]),
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(10)),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            titleDetails(
+                              title: "Hotel Name",
+                              subtitle: "${hotelModel.serviceName}",
+                            ),
+                            titleDetails(
+                              title: "Phone",
+                              subtitle: "${hotelModel.servicePhone}",
+                            ),
+                            titleDetails(
+                              title: "Price",
+                              subtitle: "${hotelModel.servicePrice}",
+                            ),
+                            titleDetails(
+                              title: "Service Descripition",
+                              subtitle: "${hotelModel.serviceDescripition}",
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: RaisedButton(
+                            color: color,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(5.0)),
+                            padding: const EdgeInsets.all(10.0),
+                            onPressed: disable == false
+                                ? () {
+                                    setState(() {});
+                                    showDialog(
+                                      context: context,
+                                      builder: (context) => AlertDialog(
+                                        title: Row(
+                                          children: [
+                                            Icon(
+                                              Icons.shopping_cart,
+                                              color: Colors.blue,
+                                              size: 34,
+                                            ),
+                                            SizedBox(
+                                              width: 10.0,
+                                            ),
+                                            Text(
+                                              "Confirm to reserve",
+                                              style: TextStyle(
+                                                  fontSize: 25,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                          ],
+                                        ),
+                                        content: Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            // Text(
+                                            //   "Your Barcode is $random",
+                                            //   style:
+                                            //       TextStyle(fontWeight: FontWeight.bold),
+                                            // ),
+                                            SizedBox(
+                                              height: 15.0,
+                                            ),
+                                          ],
+                                        ),
+                                        actions: [
+                                          Row(
+                                            children: [
+                                              // RaisedButton(autofocus: ,)
+                                              ElevatedButton(
+                                                onPressed: () {
+                                                  setState(() {
+                                                    print(
+                                                        "pppp ${hotelModel.id}");
+                                                    print("pppp ${HotelID}");
+                                                    JoyCubit.get(context)
+                                                        .generateBarCode(
+                                                            context);
+                                                    JoyCubit.get(context)
+                                                        .safeBarcode(
+                                                            random, serialNum);
+                                                    disable = true;
+                                                    book = 'Booked';
+                                                    color = Colors.grey[300];
 
-                                       },
-                                     ),
-                                   ),
-
-                                 ),
-                                 content: Column(
-                                     mainAxisSize: MainAxisSize.min,
-                                     children: [
-                                       Text(
-                                         "$tarek",
-                                       ),
-                                     ]
-                                 ),
-                                 actions: [
-                                   TextButton(
-                                     onPressed: () {
-                                       Navigator.pop(context);
-
-                                     },
-                                     child: Text("OK"),
-                                   )
-                                 ],
-                               ),
-                             );
-                           });
-                         },
-                         color: Colors.white,
-                         textColor: Colors.black,
-                       ),
-                     ),
-                   ),
-                 ),
-
-                 Container(
-                     decoration:
-                     BoxDecoration(borderRadius: BorderRadius.circular(20)),
-                     height: 250,
-                     child: imageSlider(hotelModel)),
-                 SingleChildScrollView(
-                   child: Padding(
-                     padding: const EdgeInsets.all(15.0),
-                     child: Container(
-                       decoration: BoxDecoration(
-                           border: Border.all(width: 2, color: Colors.grey[700]),
-                           color: Colors.white,
-                           borderRadius: BorderRadius.circular(10)),
-                       child: Column(
-                         mainAxisAlignment: MainAxisAlignment.start,
-                         children: [
-                           titleDetails(
-                             title: "Hotel Name",
-                             subtitle: "${hotelModel.serviceName}",
-                           ),
-                           titleDetails(
-                             title: "Phone",
-                             subtitle: "${hotelModel.servicePhone}",
-                           ),
-                           titleDetails(
-                             title: "Price",
-                             subtitle: "${hotelModel.servicePrice}",
-                           ),
-                           titleDetails(
-                             title: "Service Descripition",
-                             subtitle: "${hotelModel.serviceDescripition}",
-                           ),
-                         ],
-                       ),
-                     ),
-                   ),
-                 ),
-                 Row(
-                   children: [
-                     Expanded(
-                       child: Padding(
-                         padding: const EdgeInsets.all(10.0),
-                         child: RaisedButton(
-                           color: color,
-                           shape: RoundedRectangleBorder(
-                               borderRadius: BorderRadius.circular(5.0)
-                           ),
-                           padding: const EdgeInsets.all(10.0),
-                           onPressed:disable==false?
-                               () {
-                             setState(() {
-
-                             });
-                             showDialog(
-                               context: context,
-                               builder: (context) => AlertDialog(
-                                 title: Row(
-                                   children: [
-                                     Icon(
-                                       Icons.shopping_cart,
-                                       color: Colors.blue,
-                                       size: 34,
-                                     ),
-                                     SizedBox(
-                                       width: 10.0,
-                                     ),
-                                     Text(
-                                       "Confirm to reserve",
-                                       style: TextStyle(
-                                           fontSize: 25,
-                                           fontWeight: FontWeight.bold),
-                                     ),
-                                   ],
-                                 ),
-                                 content: Column(
-                                   mainAxisSize: MainAxisSize.min,
-                                   children: [
-                                     // Text(
-                                     //   "Your Barcode is $random",
-                                     //   style:
-                                     //       TextStyle(fontWeight: FontWeight.bold),
-                                     // ),
-                                     SizedBox(
-                                       height: 15.0,
-                                     ),
-                                   ],
-                                 ),
-                                 actions: [
-                                   Row(
-                                     children: [
-                                       // RaisedButton(autofocus: ,)
-                                       ElevatedButton(
-                                         onPressed: () {
-                                           setState(() {
-                                             print("pppp ${hotelModel.id}");
-                                             print("pppp ${HotelID}");
-                                             JoyCubit.get(context).generateBarCode(context);
-                                             JoyCubit.get(context).safeBarcode(random,serialNum);
-                                             disable = true;
-                                             book = 'Booked';
-                                             color = Colors.grey[300];
-
-                                             Navigator.pop(context);
-                                           });
-                                         },
-                                         child: Text("Confirm"),
-                                         autofocus: disable,
-                                       ),
-                                       SizedBox(
-                                         width: 15.0,
-                                       ),
-                                       ElevatedButton(
-                                         onPressed: () {
-                                           print('cancel');
-                                           Navigator.pop(context);
-                                         },
-                                         child: Text("Cancel"),
-                                       ),
-                                     ],
-                                   ),
-
-                                 ],
-                               ),
-                             );
-                           }:(){},
-                           child: Text(
-                             "$book",
-                             style: TextStyle(
-                                 fontSize: 25, fontWeight: FontWeight.w700),
-                           ),
-                         ),
-                       ),
-                     ),
-                     Expanded(
-                       child: Padding(
-                         padding: const EdgeInsets.all(10.0),
-                         child: RaisedButton(
-                           color: Colors.white,
-                           shape: RoundedRectangleBorder(
-                               borderRadius: BorderRadius.circular(5.0)
-                           ),
-                           padding: const EdgeInsets.all(10.0),
-                           onPressed: () => showDialog(
-                             context: context,
-                             builder: (context) => AlertDialog(
-                               title: Text("Rate This App"),
-                               content: Column(
-                                 mainAxisSize: MainAxisSize.min,
-                                 children: [
-                                   Text(
-                                     "Please leave a star rating",
-                                   ),
-                                   SizedBox(
-                                     height: 15.0,
-                                   ),
-                                   RatingBar.builder(
-                                       maxRating: 1,
-                                       itemBuilder: (context, _) => Icon(
-                                         Icons.star,
-                                         color: Colors.amber,
-                                       ),
-                                       onRatingUpdate: (rating) {
-                                         this.x = rating;
-                                         print(x);
-                                       })
-                                 ],
-                               ),
-                               actions: [
-                                 TextButton(
-                                   onPressed: () {
-                                     Navigator.pop(context);
-                                   },
-                                   child: Text("OK"),
-                                 )
-                               ],
-                             ),
-                           ),
-                           child: Text(
-                             "Rate US",
-                             style: TextStyle(
-                                 fontSize: 25, fontWeight: FontWeight.w700),
-                           ),
-                         ),
-                       ),
-                     ),
-                   ],
-                 )
-               ],
-             ),
-           ),
-         ),
-       );
+                                                    Navigator.pop(context);
+                                                  });
+                                                },
+                                                child: Text("Confirm"),
+                                                autofocus: disable,
+                                              ),
+                                              SizedBox(
+                                                width: 15.0,
+                                              ),
+                                              ElevatedButton(
+                                                onPressed: () {
+                                                  print('cancel');
+                                                  Navigator.pop(context);
+                                                },
+                                                child: Text("Cancel"),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                  }
+                                : () {},
+                            child: Text(
+                              "$book",
+                              style: TextStyle(
+                                  fontSize: 25, fontWeight: FontWeight.w700),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: RaisedButton(
+                            color: Colors.white,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(5.0)),
+                            padding: const EdgeInsets.all(10.0),
+                            onPressed: () => showDialog(
+                              context: context,
+                              builder: (context) => AlertDialog(
+                                title: Text("Rate This App"),
+                                content: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Text(
+                                      "Please leave a star rating",
+                                    ),
+                                    SizedBox(
+                                      height: 15.0,
+                                    ),
+                                    RatingBar.builder(
+                                        maxRating: 1,
+                                        itemBuilder: (context, _) => Icon(
+                                              Icons.star,
+                                              color: Colors.amber,
+                                            ),
+                                        onRatingUpdate: (rating) {
+                                          this.x = rating;
+                                          print(x);
+                                        })
+                                  ],
+                                ),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                    child: Text("OK"),
+                                  )
+                                ],
+                              ),
+                            ),
+                            child: Text(
+                              "Rate US",
+                              style: TextStyle(
+                                  fontSize: 25, fontWeight: FontWeight.w700),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  )
+                ],
+              ),
+            ),
+          ),
+        );
       },
     );
   }

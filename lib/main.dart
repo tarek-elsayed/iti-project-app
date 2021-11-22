@@ -19,7 +19,7 @@ void main() async {
 
   Widget widget;
   bool isDark = CacheHelper.getData(key: 'isDark');
-  // bool onBoarding = CacheHelper.getData(key: 'onBoarding');
+  bool onBoarding = CacheHelper.getData(key: 'onBoarding');
   uId = CacheHelper.getData(key: 'uId');
 
   // if (onBoarding != null) {

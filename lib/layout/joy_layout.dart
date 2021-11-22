@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
+import 'package:jooy/shared/components/constains.dart';
 import 'package:jooy/layout/joy_app/cubit/cubit.dart';
 import 'package:jooy/layout/joy_app/cubit/state.dart';
 
@@ -12,7 +12,7 @@ class JoyLayout extends StatelessWidget {
       builder: (context, state) {
         var cubit = JoyCubit.get(context);
         return Scaffold(
-          drawer: drawer(),
+          drawer: drawer(context),
           appBar: AppBar(
             elevation: 0,
             backgroundColor: Color(0xffF9F9F9),
@@ -118,7 +118,7 @@ class JoyLayout extends StatelessWidget {
     );
   }
 
-  Widget drawer(){
+  Widget drawer(BuildContext context){
     return Drawer(
       child:Container(
       decoration: BoxDecoration(
@@ -172,6 +172,9 @@ class JoyLayout extends StatelessWidget {
                       fontWeight: FontWeight.bold),
                 )),
             ListTile(
+              onTap: (){
+                signOut(context);
+              },
                 leading: Icon(Icons.home),
                 title: Text(
                   "logout",

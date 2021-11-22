@@ -22,6 +22,7 @@ class HotelModel {
   bool offerd;
   String offerRatio;
   Timestamp createdAt;
+  String brandName;
   //to Do list
   String imagePath ;
 
@@ -37,6 +38,7 @@ class HotelModel {
     this.createdAt,
     this.createdBy,
     this.offerd,
+    this.brandName,
   });
 
   HotelModel.fromJson(Map<String, dynamic> json, [String ID]) {
@@ -50,6 +52,7 @@ class HotelModel {
     createdBy=json['createdBy'];
     offerd=json['offerd'];
     serviceDescripition=json['serviceDescripition'];
+    brandName=json['brandName'];
 
   }
 

@@ -80,70 +80,89 @@ class HotelScreen extends StatelessWidget {
         },
         child: Container(
             height: 200,
-            child: Row(
-              // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Expanded(
-                  child: Container(
-                    margin: EdgeInsets.all(10.0),
-                    width: MediaQuery.of(context).size.width * 0.39,
-                    height: 200,
-                    decoration: BoxDecoration(
-                        image: DecorationImage(
+            child: Stack(
+              children:[
+                //TODO AFTER VIDEO
+                // hotelModel.offerd==true?ClipRRect(
+                //   child: Banner(
+                //     message: 'offer',
+                //     textStyle:TextStyle(
+                //         fontSize: 16,
+                //         fontWeight: FontWeight.bold
+                //     ) ,
+                //     color:Colors.redAccent,
+                //     location: BannerLocation.topEnd,
+                //     child: Container(height: 300,),
+                //   ),
+                // ):Container(),
+                Row(
+                // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
 
-                          image: NetworkImage('${hotelModel.imagePath}'),
-                          fit: BoxFit.fill,
-                        ),
-                        borderRadius: BorderRadius.circular(15)),
-                  ),
-                ),
-                Expanded(
-                  child: Container(
-                    child: Padding(
-                      padding: const EdgeInsets.all(15.0),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.max,
-                        // mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "${hotelModel.serviceName}",
-                            // textDirection: TextDirection.rtl,
-                            style: TextStyle(
-                              color: Colors.blue,
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                            ),
+                  Expanded(
+                    child: Container(
+                      margin: EdgeInsets.all(10.0),
+                      width: MediaQuery.of(context).size.width * 0.39,
+                      height: 200,
+                      decoration: BoxDecoration(
+                          image: DecorationImage(
 
+                            image: NetworkImage('${hotelModel.imagePath}'),
+                            fit: BoxFit.fill,
                           ),
-                          Text("${hotelModel.serviceDescripition}",
+                          borderRadius: BorderRadius.circular(15)),
+                    ),
+                  ),
+                  Expanded(
+                    child: Container(
+                      child: Padding(
+                        padding: const EdgeInsets.all(15.0),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.max,
+                          // mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "${hotelModel.serviceName}",
                               // textDirection: TextDirection.rtl,
-                              maxLines: 2,
                               style: TextStyle(
-                                color: Colors.yellow,
+                                color: Colors.blue,
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold,
-                              )),
-                          Spacer(),
-                          Row(
-                            children: [
-                              TextButton(
-                                onPressed: (){},
-                                child: Text('See More',
-                                  style: TextStyle(fontSize: 16),),
-                            ),
-                              Spacer(),
-                              Icon(Icons.favorite)
-                            ],
-                          ),
+                              ),
 
-                        ],
+                            ),
+                            Text("${hotelModel.serviceDescripition}",
+                                // textDirection: TextDirection.rtl,
+                                maxLines: 2,
+                                style: TextStyle(
+                                  color: Colors.yellow,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                )),
+                            Spacer(),
+                            Row(
+                              children: [
+                                TextButton(
+                                  onPressed: (){},
+                                  child: Text('See More',
+                                    style: TextStyle(fontSize: 16),),
+                              ),
+                                Spacer(),
+                                Icon(Icons.favorite)
+                              ],
+                            ),
+
+                          ],
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ],
-            )),
+                ],
+              ),
+            ]
+            ),
+        ),
       ),
     );
   }

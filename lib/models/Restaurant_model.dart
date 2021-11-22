@@ -47,6 +47,7 @@ class RestaurantModel {
   bool offerd;
   String offerRatio;
   Timestamp createdAt;
+  String brandName;
   //to Do list
   String imagePath ;
 
@@ -62,6 +63,7 @@ class RestaurantModel {
     this.createdAt,
     this.createdBy,
     this.offerd,
+    this.brandName,
   });
 
   RestaurantModel.fromJson(Map<String, dynamic> json, [String ID]) {
@@ -75,6 +77,7 @@ class RestaurantModel {
     createdBy=json['createdBy'];
     offerd=json['offerd'];
     serviceDescripition=json['serviceDescripition'];
+    brandName=json['brandName'];
 
   }
 

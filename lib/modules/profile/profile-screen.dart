@@ -22,8 +22,9 @@ class ProfileScreen extends StatelessWidget {
         var model = JoyCubit.get(context).model;
         var image = JoyCubit.get(context).profileImage;
 
-        nameController.text = model.name;
+
         emailController.text = model.email;
+        nameController.text = model.name;
         phoneController.text = model.phone;
 
         return ConditionalBuilder(

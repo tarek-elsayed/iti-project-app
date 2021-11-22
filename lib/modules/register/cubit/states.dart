@@ -17,7 +17,9 @@ class JoyRegisterErrorState extends JoyRegisterStates{
 
 class JoyCreateUserLoadingState extends JoyRegisterStates{}
 class JoyCreateUserSuccessState extends JoyRegisterStates{
+  final String uId;
 
+  JoyCreateUserSuccessState(this.uId);
 }
 class JoyCreateUserErrorState extends JoyRegisterStates{
   final String error;

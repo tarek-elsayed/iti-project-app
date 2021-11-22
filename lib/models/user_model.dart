@@ -50,14 +50,15 @@ class UserModel {
   String phone;
   List<Barcodes> barcodes;
 
-  UserModel(
-      {this.uId,
-        this.email,
-        this.isEmailVerified,
-        this.name,
-        this.image,
-        this.phone,
-        this.barcodes});
+  UserModel({
+    this.uId,
+    this.email,
+    this.isEmailVerified,
+    this.name,
+    this.image,
+    this.phone,
+    this.barcodes,
+  });
 
   UserModel.fromJson(Map<String, dynamic> json) {
     uId = json['uId'];

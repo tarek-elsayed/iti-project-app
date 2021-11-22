@@ -2,7 +2,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jooy/layout/joy_app/cubit/cubit.dart';
+import 'package:jooy/layout/joy_layout.dart';
 import 'package:jooy/modules/login/cubit/states.dart';
+import 'package:jooy/shared/components/components.dart';
 import 'package:jooy/shared/components/constains.dart';
 
 class JoyLoginCubit extends Cubit<JoyLoginStates> {
@@ -10,7 +12,8 @@ class JoyLoginCubit extends Cubit<JoyLoginStates> {
 
   static JoyLoginCubit get(context) => BlocProvider.of(context);
 
-  void userLogin({
+  void userLogin( {
+    BuildContext context,
     @required String email,
     @required String password,
   }) {
@@ -26,9 +29,10 @@ class JoyLoginCubit extends Cubit<JoyLoginStates> {
               print(value.user.uid),
               uId = value.user.uid,
               JoyCubit()
-                ..getUserData()
+                // ..getUserData()
                 ..getAllHotel()
-                ..getAllRestaurant(),
+                ..getAllRestaurant()..getAllRents()..getAllPlaces()..getUserData(),
+                // navigateTo(context, JoyLayout()),
             })
         .catchError((error) => {
               emit(JoyLoginErrorState(error.toString())),
@@ -40,7 +44,7 @@ class JoyLoginCubit extends Cubit<JoyLoginStates> {
 
   void changePasswordVisibility() {
     isPasswordShown = !isPasswordShown;
-    suffix = isPasswordShown ? Icons.visibility_off : Icons.visibility;
+    suffix = isPasswordShown==false ? Icons.visibility :Icons.visibility_off ;
     emit(JoyChangePasswordVisibilityState());
   }
 }

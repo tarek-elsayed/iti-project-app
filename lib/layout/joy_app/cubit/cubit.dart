@@ -42,22 +42,25 @@ class JoyCubit extends Cubit<JoyStates> {
     currentIndex = index;
     // getFavHotel(FavFromUser,fav);
     // printX();
+    getUserData();
     emit(HomeChangeBottomNavState());
   }
 
   UserModel model;
 
   void getUserData() async {
-    emit(JoyGetUserLoadingStates());
 
+    emit(JoyGetUserLoadingStates());
+print("USERS $uId");
     FirebaseFirestore.instance.collection('Users').doc(uId).get().then((value) {
       //value is return as document snapshot
       print(value.data());
       model = UserModel.fromJson(value.data());
       imageUrl = model.image;
-      print('555');
+      print(model.name);
+      print('66666');
       getBarCode(HotelID);
-      emit(JoyGetUserSuccessStates());
+      emit(JoyGetUserSuccessStates(model));
     }).catchError((error) {
       emit(JoyGetUserErrorStates(error.toString()));
     });
@@ -252,6 +255,7 @@ class JoyCubit extends Cubit<JoyStates> {
       image: imageUrl,
       uId: model.uId,
       isEmailVerified: false,
+      barcodes: model.barcodes
     );
 
     // if(profileImage!= null){
@@ -373,6 +377,7 @@ class JoyCubit extends Cubit<JoyStates> {
 
   List<Barcodes> hotelBarcodes = [];
   Barcodes hotelBarcode;
+  List<Barcodes> hotelBarcodes1 = [];
 
   safeBarcode(barCode, SerialNum) async {
     // generateBarCode()
@@ -448,4 +453,43 @@ class JoyCubit extends Cubit<JoyStates> {
       }
     }
   }
+List<Barcodes> barCodeChange = [];
+  deleteBarCode(String id){
+    print(id);
+    print(model.barcodes.length);
+    barCodeChange=[];
+    for(int i =0; i<model.barcodes.length; i++){
+      if (model.barcodes[i].serialNum == id) {
+        print(model.barcodes[i].barcode);
+        if (model.barcodes[i].barcode != null) {
+         model.barcodes.removeAt(i);
+         barCodeChange=model.barcodes;
+          print('Lobna');
+          print(model.barcodes.length);
+          print(model.barcodes);
+          UserModel userModel = UserModel(
+            phone: model.phone,
+            name: model.name,
+            email: model.email,
+            image: model.image,
+            uId: model.uId,
+            isEmailVerified: model.isEmailVerified,
+            barcodes: barCodeChange,
+          );
+          FirebaseFirestore.instance.collection("Users").doc(uId)
+              .update(userModel.toMap()).then((value){
+            updateUserDate(name: model.name, phone: model.phone, email: model.email);
+            disable = false;
+            book = 'Book Now';
+            color = Colors.white;
+            tarek=null;
+            print('BBBB');
+          });
+        }
+      }
+      print('Lobna111');
+    }
+  }
+
+
 }
