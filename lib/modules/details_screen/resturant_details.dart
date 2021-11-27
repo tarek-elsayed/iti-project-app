@@ -1,9 +1,11 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:jooy/layout/joy_app/cubit/cubit.dart';
 import 'package:jooy/models/Restaurant_model.dart';
+import 'package:jooy/models/user_model.dart';
 import 'package:jooy/shared/components/constains.dart';
 
 
@@ -28,6 +30,7 @@ class _RestaurantDetailScreen extends State<RestaurantDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var cubit =JoyCubit.get(context);
     // TODO: implement build
     return Scaffold(
       appBar: AppBar(
@@ -112,8 +115,49 @@ class _RestaurantDetailScreen extends State<RestaurantDetailScreen> {
                                       icon: Icon(Icons.delete_forever),
                                       onPressed: () {
                                         setState(() {
-                                          JoyCubit.get(context)
-                                              .deleteBarCode(RestID);
+                                          List<Barcodes> barCodeChange = [];
+                                          barCodeChange = [];
+                                          for (int i = 0; i < cubit.model.barcodes.length; i++) {
+                                            if (cubit.model.barcodes[i].serialNum.toString() == RestID) {
+                                              print(cubit.model.barcodes[i].barcode);
+                                              if (cubit.model.barcodes[i].barcode != null) {
+                                                cubit.model.barcodes.removeAt(i);
+                                                barCodeChange = cubit.model.barcodes;
+                                                print('Lobna');
+                                                print(cubit.model.barcodes.length);
+                                                print(cubit.model.barcodes);
+                                                UserModel userModel = UserModel(
+                                                    phone: cubit.model.phone,
+                                                    name: cubit.model.name,
+                                                    email: cubit.model.email,
+                                                    image: cubit.model.image,
+                                                    uId: cubit.model.uId,
+                                                    isEmailVerified: cubit.model.isEmailVerified,
+                                                    barcodes: barCodeChange,
+                                                    orderHotels: cubit.model.orderHotels,
+                                                    orderRent: cubit.model.orderRent
+                                                );
+
+                                                FirebaseFirestore.instance
+                                                    .collection("Users")
+                                                    .doc(uId)
+                                                    .update(userModel.toMap())
+                                                    .then((value) {
+
+                                                  tarek = null;
+                                                  cubit.getUserData();
+
+                                                  print('BBBB');
+                                                });
+                                              }
+                                            }
+                                            print('Lobna111');
+
+                                          }
+                                          disableRest = false;
+                                          bookRest = 'Book Now';
+                                          colorRest = Colors.white;
+                                          tarek=null;
                                           Navigator.pop(context);
 
                                         });
@@ -190,11 +234,11 @@ class _RestaurantDetailScreen extends State<RestaurantDetailScreen> {
                     child: Padding(
                       padding: const EdgeInsets.all(10.0),
                       child: RaisedButton(
-                        color: colorHotels,
+                        color: colorRest,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(5.0)),
                         padding: const EdgeInsets.all(10.0),
-                        onPressed: disableHotels == false
+                        onPressed: disableRest == false
                             ? () {
                           setState(() {});
                           showDialog(
@@ -241,7 +285,9 @@ class _RestaurantDetailScreen extends State<RestaurantDetailScreen> {
                                           JoyCubit.get(context).generateBarCode(context);
                                           JoyCubit.get(context).safeBarcode(random,serialNum);
                                           Navigator.pop(context);
-
+                                           disableRest=true;
+                                           bookRest='Booked';
+                                           colorRest=Colors.grey[800];
 
                                         });
                                       },

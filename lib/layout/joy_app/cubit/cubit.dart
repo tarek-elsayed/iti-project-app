@@ -71,6 +71,7 @@ class JoyCubit extends Cubit<JoyStates> {
     FirebaseFirestore.instance.collection('Users').doc(uId).get().then((value) {
       model = UserModel.fromJson(value.data());
       imageUrl = model.image;
+      print(' 9999${model.barcodes[0].barcode}');
       emit(JoyGetUserSuccessStates(model));
     }).catchError((error) {
       emit(JoyGetUserErrorStates(error.toString()));
@@ -278,6 +279,7 @@ class JoyCubit extends Cubit<JoyStates> {
         .putFile(profileImage)
         .then((value) {
       value.ref.getDownloadURL().then((value) {
+        updateUserDate(name: model.name, phone: model.phone, email: model.email);
         emit(JoySuccessUplodeProfileImageState());
         imageUrl = value;
       }).catchError((error) {
@@ -309,11 +311,12 @@ class JoyCubit extends Cubit<JoyStates> {
 
   safeBarcode(barCode, serialNum) async {
     // generateBarCode()
+    restBarcodes=[];
     restBarcode = Barcodes(barcode: barCode, serialNum: serialNum);
     if (model.barcodes != null) {
       restBarcodes.add(restBarcode);
     } else {
-      model.barcodes = model.barcodes;
+      restBarcodes = model.barcodes;
     }
     UserModel userModel = UserModel(
       phone: model.phone,
@@ -331,6 +334,9 @@ class JoyCubit extends Cubit<JoyStates> {
         .doc(uId)
         .set(userModel.toMap())
         .then((value) async {
+     disableRest=true;
+       bookRest='Booked';
+       colorRest=Colors.grey[800];
       saveBarcodeRest(random,model.uId);
       print('success');
     });
@@ -365,7 +371,7 @@ class JoyCubit extends Cubit<JoyStates> {
         } else {
           disableRest = true;
           bookRest = 'Booked';
-          colorRest = Colors.grey[700];
+          colorRest = Colors.grey[800];
           print('DDDD');
           tarek = model.barcodes[i].barcode;
           break;
@@ -412,11 +418,12 @@ class JoyCubit extends Cubit<JoyStates> {
               .doc(uId)
               .update(userModel.toMap())
               .then((value) {
-           getUserData();
             disableRest = false;
             bookRest = 'Book Now';
             colorRest = Colors.white;
             tarek = null;
+           getUserData();
+
             print('BBBB');
           });
         }
