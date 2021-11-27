@@ -524,7 +524,7 @@ class JoyCubit extends Cubit<JoyStates> {
           .then((value) {
         saveIdHotels(uId);
         getHotels(HotelID, context);
-getAllHotel();
+        getAllHotel();
         print('Count --');
         for (int i = 0; i < model.orderHotels.length; i++) {
           if (HotelID == model.orderHotels[i]) {
@@ -736,7 +736,7 @@ List hotelsId;
       servicePrice: rentModel.servicePrice,
       usersID: rentsId,
     );
-    FirebaseFirestore.instance.collection('Rent').doc(HotelID).
+    FirebaseFirestore.instance.collection('Rent').doc(RentID).
     update(QQ.toMap()).then((value){
       print('send id rent');
       getAllHotel();

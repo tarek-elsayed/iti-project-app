@@ -42,91 +42,91 @@ class JoyLayout extends StatelessWidget {
                 backgroundColor: Colors.blue,
                 icon: cubit.currentIndex == 0
                     ? Icon(
-                  Icons.place,
-                  color: cubit.currentIndex == 0
-                      ? Colors.white
-                      : Colors.black,
-                  size: 26,
-                )
+                        Icons.place,
+                        color: cubit.currentIndex == 0
+                            ? Colors.white
+                            : Colors.black,
+                        size: 26,
+                      )
                     : Icon(
-                  Icons.place_outlined,
-                  color: cubit.currentIndex == 0
-                      ? Colors.white
-                      : Colors.black,
-                ),
+                        Icons.place_outlined,
+                        color: cubit.currentIndex == 0
+                            ? Colors.white
+                            : Colors.black,
+                      ),
                 label: "",
               ),
               BottomNavigationBarItem(
                 backgroundColor: Colors.blue,
                 icon: cubit.currentIndex == 1
                     ? Icon(
-                  Icons.hotel,
-                  color: cubit.currentIndex == 1
-                      ? Colors.white
-                      : Colors.black,
-                  size: 26,
-                )
+                        Icons.hotel,
+                        color: cubit.currentIndex == 1
+                            ? Colors.white
+                            : Colors.black,
+                        size: 26,
+                      )
                     : Icon(
-                  Icons.hotel_outlined,
-                  color: cubit.currentIndex == 1
-                      ? Colors.white
-                      : Colors.black,
-                ),
+                        Icons.hotel_outlined,
+                        color: cubit.currentIndex == 1
+                            ? Colors.white
+                            : Colors.black,
+                      ),
                 label: "",
               ),
               BottomNavigationBarItem(
                 backgroundColor: Colors.blue,
                 icon: cubit.currentIndex == 2
                     ? Icon(
-                  Icons.restaurant,
-                  color: cubit.currentIndex == 2
-                      ? Colors.white
-                      : Colors.black,
-                  size: 28,
-                )
+                        Icons.restaurant,
+                        color: cubit.currentIndex == 2
+                            ? Colors.white
+                            : Colors.black,
+                        size: 28,
+                      )
                     : Icon(
-                  Icons.restaurant_outlined,
-                  color: cubit.currentIndex == 2
-                      ? Colors.white
-                      : Colors.black,
-                  size: 28,
-                ),
+                        Icons.restaurant_outlined,
+                        color: cubit.currentIndex == 2
+                            ? Colors.white
+                            : Colors.black,
+                        size: 28,
+                      ),
                 label: "",
               ),
               BottomNavigationBarItem(
                 backgroundColor: Colors.blue,
                 icon: cubit.currentIndex == 3
                     ? Icon(
-                  Icons.home,
-                  color: cubit.currentIndex == 3
-                      ? Colors.white
-                      : Colors.black,
-                  size: 26,
-                )
+                        Icons.home,
+                        color: cubit.currentIndex == 3
+                            ? Colors.white
+                            : Colors.black,
+                        size: 26,
+                      )
                     : Icon(
-                  Icons.home_outlined,
-                  color: cubit.currentIndex == 3
-                      ? Colors.white
-                      : Colors.black,
-                ),
+                        Icons.home_outlined,
+                        color: cubit.currentIndex == 3
+                            ? Colors.white
+                            : Colors.black,
+                      ),
                 label: "",
               ),
               BottomNavigationBarItem(
                 backgroundColor: Colors.blue,
                 icon: cubit.currentIndex == 4
                     ? Icon(
-                  Icons.person,
-                  color: cubit.currentIndex == 4
-                      ? Colors.white
-                      : Colors.black,
-                  size: 26,
-                )
+                        Icons.person,
+                        color: cubit.currentIndex == 4
+                            ? Colors.white
+                            : Colors.black,
+                        size: 26,
+                      )
                     : Icon(
-                  Icons.person_outline,
-                  color: cubit.currentIndex == 4
-                      ? Colors.white
-                      : Colors.black,
-                ),
+                        Icons.person_outline,
+                        color: cubit.currentIndex == 4
+                            ? Colors.white
+                            : Colors.black,
+                      ),
                 label: "",
               ),
             ],
@@ -139,97 +139,103 @@ class JoyLayout extends StatelessWidget {
   Widget drawer(BuildContext context) {
     var userModel = JoyCubit.get(context).model;
     return Drawer(
-        child: Container(
-          // padding:EdgeInsets.only(top: 20.0),
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [
-                Colors.grey.shade400,
-                Colors.blue,
-                Colors.blue.shade900,
-              ],
-            ),
+      child: Container(
+        // padding:EdgeInsets.only(top: 20.0),
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Colors.grey.shade400,
+              Colors.blue,
+              Colors.blue.shade900,
+            ],
           ),
+        ),
 
-          padding: EdgeInsets.symmetric(vertical: 120),
-          child: Column(
-            // mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                CircleAvatar(
-                  radius: 80,
-                  backgroundColor: Colors.blue,
-                  backgroundImage: NetworkImage("${userModel.image}"),
+        padding: EdgeInsets.symmetric(vertical: 120),
+        child: Column(
+          // mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            CircleAvatar(
+              radius: 80,
+              backgroundColor: Colors.blue,
+              backgroundImage: NetworkImage("${userModel.image}"),
+            ),
+            SizedBox(
+              height: 15.0,
+            ),
+            Center(
+              child: Text(
+                '${userModel.name.toUpperCase()}',
+                style: TextStyle(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 26.0,
                 ),
-                SizedBox(
-                  height: 15.0,
+              ),
+            ),
+            SizedBox(
+              height: 25.0,
+            ),
+            ListTile(
+                onTap: () {
+                  int value = JoyCubit.get(context).currentIndex = 4;
+                  JoyCubit.get(context).changeBottom(value);
+                  Navigator.pop(context);
+                },
+                leading: Icon(Icons.person),
+                title: Text(
+                  "Profile",
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold),
+                )),
+            ListTile(
+                leading: Icon(Icons.favorite),
+                title: Text(
+                  "Orders",
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold),
                 ),
-                Center(
-                  child: Text(
-                    '${userModel.name.toUpperCase()}',
-                    style: TextStyle(
-                      fontWeight: FontWeight.w600,
-                      fontSize: 26.0,
-                    ),
-                  ),
-                ),
-                SizedBox(height: 25.0,),
-                ListTile(
-                    onTap: (){
-                      int value=JoyCubit.get(context).currentIndex=4;
-                      JoyCubit.get(context).changeBottom(value);
-                      Navigator.pop(context);
-                    },
-                    leading: Icon(Icons.person),
-                    title: Text(
-                      "Profile",
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold),
-                    )),
-                ListTile(
-                    leading: Icon(Icons.favorite),
-                    title: Text(
-                      "Orders",
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold),
-                    ),
-                    onTap: () {
-                      navigateTo(context, OrdersScreen());
-                      JoyCubit.get(context).showOrderHotels();
-                      JoyCubit.get(context).showOrderRents();
-                    }),
-                ListTile(
-                    onTap: (){
-                      navigateTo(context, AboutUS());
-                      JoyCubit.get(context).countService();
-                      JoyCubit.get(context).countUser();
-                    },
-                    leading: Icon(Icons.book),
-                    title: Text(
-                      "About Us",
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold),
-                    )),
-                ListTile(
-                    onTap: () {
-                      signOut(context);
-                    },
-                    leading: Icon(Icons.logout),
-                    title: Text(
-                      "logout",
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold),
-                    )),
-              ]),
-        ));
+                onTap: () {
+                  navigateTo(context, OrdersScreen());
+                  JoyCubit.get(context).showOrderHotels();
+                  JoyCubit.get(context).showOrderRents();
+                }),
+            ListTile(
+              onTap: () {
+                navigateTo(context, AboutUS());
+                JoyCubit.get(context).countService();
+                JoyCubit.get(context).countUser();
+              },
+              leading: Icon(Icons.book),
+              title: Text(
+                "About Us",
+                style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold),
+              ),
+            ),
+            ListTile(
+              onTap: () {
+                signOut(context);
+              },
+              leading: Icon(Icons.logout),
+              title: Text(
+                "logout",
+                style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
