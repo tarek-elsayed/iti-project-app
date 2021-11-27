@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jooy/modules/about_us/about_us.dart';
-import 'package:jooy/modules/favourite/favourite_screen.dart';
+import 'package:jooy/modules/order/order_screen.dart';
 import 'package:jooy/shared/components/components.dart';
 import 'package:jooy/shared/components/constains.dart';
 import 'package:jooy/layout/joy_app/cubit/cubit.dart';

@@ -90,9 +90,9 @@ class JoyCubit extends Cubit<JoyStates> {
       email: email,
       image: imageUrl,
       isEmailVerified: false,
-      barcodes: [],
+      barcodes: model.barcodes,
       orderHotels: model.orderHotels,
-      orderRent: model.orderRent,
+      orderRent: [],
     );
 
     FirebaseFirestore.instance
@@ -459,6 +459,7 @@ class JoyCubit extends Cubit<JoyStates> {
           .doc(RentID)
           .update(VV.toMap())
           .then((value) async {
+        saveIdRents(uId);
         getRent(RentID, context);
         getAllRents();
         for (int i = 0; i < model.orderHotels.length; i++) {
@@ -501,7 +502,7 @@ class JoyCubit extends Cubit<JoyStates> {
     HotelID = id;
     if (hotelModel.roomNum != 0) {
       countHotel = hotelModel.roomNum - 1;
-      RentModel MM = RentModel(
+      HotelModel MM = HotelModel(
         id: HotelID,
         servicePhone: hotelModel.servicePhone,
         serviceName: hotelModel.serviceName,
@@ -514,14 +515,16 @@ class JoyCubit extends Cubit<JoyStates> {
         createdAt: hotelModel.createdAt,
         serviceDescripition: hotelModel.serviceDescripition,
         servicePrice: hotelModel.servicePrice,
+
       );
       FirebaseFirestore.instance
           .collection('Hotels')
           .doc(HotelID)
           .update(MM.toMap())
           .then((value) {
+        saveIdHotels(uId);
         getHotels(HotelID, context);
-
+getAllHotel();
         print('Count --');
         for (int i = 0; i < model.orderHotels.length; i++) {
           if (HotelID == model.orderHotels[i]) {
@@ -689,6 +692,58 @@ class JoyCubit extends Cubit<JoyStates> {
           print('Done');
     });
   }
+List hotelsId;
+  saveIdHotels(String usersId){
+    hotelsId=[];
+    hotelsId.add(usersId);
+    HotelModel DD=HotelModel(
+      id: HotelID,
+      servicePhone: hotelModel.servicePhone,
+      serviceName: hotelModel.serviceName,
+      offerRatio: hotelModel.offerRatio,
+      roomNum: countHotel,
+      offerd: hotelModel.offerd,
+      brandName: hotelModel.brandName,
+      imagePath: hotelModel.imagePath,
+      createdBy: hotelModel.createdBy,
+      createdAt: hotelModel.createdAt,
+      serviceDescripition: hotelModel.serviceDescripition,
+      servicePrice: hotelModel.servicePrice,
+      usersID: hotelsId,
+    );
+    FirebaseFirestore.instance.collection('Hotels').doc(HotelID).
+    update(DD.toMap()).then((value){
+      print('send id hotel');
+      getAllHotel();
+    });
+  }
+  List rentsId;
+  saveIdRents(String usersId){
+    rentsId=[];
+    rentsId.add(usersId);
+    RentModel QQ=RentModel(
+      id: RentID,
+      servicePhone: rentModel.servicePhone,
+      serviceName: rentModel.serviceName,
+      offerRatio: rentModel.offerRatio,
+      roomNum: countRent,
+      offerd: rentModel.offerd,
+      brandName: rentModel.brandName,
+      imagePath: rentModel.imagePath,
+      createdBy: rentModel.createdBy,
+      createdAt: rentModel.createdAt,
+      serviceDescripition: rentModel.serviceDescripition,
+      servicePrice: rentModel.servicePrice,
+      usersID: rentsId,
+    );
+    FirebaseFirestore.instance.collection('Rent').doc(HotelID).
+    update(QQ.toMap()).then((value){
+      print('send id rent');
+      getAllHotel();
+    });
+  }
+
+
 
 
 }

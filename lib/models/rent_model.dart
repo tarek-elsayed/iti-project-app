@@ -15,7 +15,7 @@ class RentModel {
   //to Do list
   String imagePath ;
   int roomNum;
-
+  List usersID;
   RentModel({
     this.id,
     this.serviceName,
@@ -29,6 +29,7 @@ class RentModel {
     this.offerd,
     this.brandName,
     this.roomNum,
+    this.usersID,
   });
 
   RentModel.fromJson(Map<String, dynamic> json, [String ID]) {
@@ -45,6 +46,7 @@ class RentModel {
     serviceDescripition=json['serviceDescripition'];
     brandName=json['brandName'];
     roomNum=json['roomNumbers'];
+    usersID=json['usersID'];
   }
 
   Map<String, dynamic> toMap() {
@@ -61,6 +63,7 @@ class RentModel {
       "serviceDescripition":serviceDescripition,
       "brandName":brandName,
       "roomNumbers":roomNum,
+      "usersID":usersID,
     };
   }
 }
