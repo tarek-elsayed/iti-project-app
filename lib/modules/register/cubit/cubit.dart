@@ -54,7 +54,9 @@ class JoyRegisterCubit extends Cubit<JoyRegisterStates> {
       image: "https://firebasestorage.googleapis.com/v0/b/jooy-dadba.appspot.com/o/Users%2F9127a595d3a3421d984edc45230f6d9a.jpg?alt=media&token=49962e6b-d77f-4088-b3b0-3ae345036cc9",
       uId: uId,
       isEmailVerified: false,
-      barcodes: []
+      barcodes: [],
+      orderRent: [],
+      orderHotels: [],
     );
     FirebaseFirestore.instance
         .collection('Users')
@@ -64,7 +66,7 @@ class JoyRegisterCubit extends Cubit<JoyRegisterStates> {
 
       emit(JoyCreateUserSuccessState(uId));
       JoyCubit()
-      // ..getUserData()
+
         ..getAllHotel()
         ..getAllRestaurant()..getAllRents()..getAllPlaces()..getUserData();
       // navigateTo(context, JoyLayout()),

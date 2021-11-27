@@ -2,6 +2,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class RentModel {
+  String ID;
   String id;
   String serviceName;
   String servicePhone;
@@ -13,10 +14,11 @@ class RentModel {
   Timestamp createdAt;
   String brandName;
   //to Do list
-  String imagePath ;
+  List imagePath ;
   int roomNum;
   List usersID;
   RentModel({
+    this.ID,
     this.id,
     this.serviceName,
     this.serviceDescripition,
@@ -32,9 +34,10 @@ class RentModel {
     this.usersID,
   });
 
-  RentModel.fromJson(Map<String, dynamic> json, [String ID]) {
-    id = ID;
-    id=json['id'];
+  RentModel.fromJson(Map<String, dynamic> json, [ID]) {
+
+    id=ID;
+    ID = json['id'];
     serviceName = json['serviceName'];
     servicePhone = json['servicePhone'];
     servicePrice = json['servicePrice'];

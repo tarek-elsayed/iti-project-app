@@ -49,13 +49,28 @@ class OrderHotelsScreen extends StatelessWidget {
                           return buildCard(order[index], context);
                         })),
               ),
-              fallback: (context) => Center(child: CircularProgressIndicator()),
+              fallback: (context) => Center(
+                  child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    'No Orders Yet',
+                    style:
+                        TextStyle(fontSize: 28.0, fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(
+                    height: 10.0,
+                  ),
+                  CircularProgressIndicator(),
+                ],
+              )),
             );
           },
         ));
   }
 
-  Widget buildCard(HotelModel orderModel, context) {
+  Widget buildCard(HotelModel hotelModel, context) {
     var cubit = JoyCubit.get(context);
 
     return Card(
@@ -71,7 +86,7 @@ class OrderHotelsScreen extends StatelessWidget {
           child: Stack(
             children: [
               //TODO AFTER VIDEO
-              orderModel.offerd == true
+              hotelModel.offerd == true
                   ? ClipRRect(
                       child: Banner(
                         message: 'offer',
@@ -95,7 +110,7 @@ class OrderHotelsScreen extends StatelessWidget {
                       height: 200,
                       decoration: BoxDecoration(
                           image: DecorationImage(
-                            image: NetworkImage('${orderModel.imagePath}'),
+                            image: NetworkImage('${hotelModel.imagePath}'),
                             fit: BoxFit.fill,
                           ),
                           borderRadius: BorderRadius.circular(15)),
@@ -111,7 +126,7 @@ class OrderHotelsScreen extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "${orderModel.serviceName}",
+                              "${hotelModel.serviceName}",
                               // textDirection: TextDirection.rtl,
                               style: TextStyle(
                                 color: Colors.blue,
@@ -120,7 +135,7 @@ class OrderHotelsScreen extends StatelessWidget {
                               ),
                             ),
                             Text(
-                              "${orderModel.serviceDescripition}",
+                              "${hotelModel.serviceDescripition}",
                               // textDirection: TextDirection.rtl,
                               maxLines: 2,
                               style: TextStyle(
@@ -129,6 +144,13 @@ class OrderHotelsScreen extends StatelessWidget {
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
+                            Spacer(),
+                            IconButton(
+                                icon: Icon(Icons.delete),
+                                onPressed: () {
+                                  cubit.deleteIdHotelUsers(
+                                      uId, hotelModel.ID, context);
+                                })
                           ],
                         ),
                       ),

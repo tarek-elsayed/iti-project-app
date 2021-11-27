@@ -9,8 +9,10 @@
 // createdAt: new Date(),
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:jooy/shared/components/constains.dart';
 
 class HotelModel {
+  String ID;
   String id;
   String serviceName;
   String servicePhone;
@@ -29,6 +31,7 @@ class HotelModel {
   List usersID;
 
   HotelModel({
+    this.ID,
     this.id,
     this.serviceName,
     this.serviceDescripition,
@@ -44,9 +47,10 @@ class HotelModel {
     this.usersID,
   });
 
-  HotelModel.fromJson(Map<String, dynamic> json, [String ID]) {
+  HotelModel.fromJson(Map<String, dynamic> json, [ID]) {
+
     id = ID;
-    id = json['id'];
+    ID = json['id'];
     serviceName = json['serviceName'];
     servicePhone = json['servicePhone'];
     servicePrice = json['servicePrice'];

@@ -45,8 +45,6 @@ class ResturantScreen extends StatelessWidget {
     ));
   }
 
-
-
   Widget buildCard(RestaurantModel restaurantModel, context) {
     var cubit = JoyCubit.get(context);
     return Card(
@@ -58,79 +56,98 @@ class ResturantScreen extends StatelessWidget {
       child: InkWell(
         onTap: () {
           // JoyCubit.get(context).checkBarcode(restaurantModel.id);
-          RestID=restaurantModel.id;
+          RestID = restaurantModel.id;
           // print("hotelModel ${hotelModel.id}");
           JoyCubit.get(context).createSerialNum(restaurantModel.id);
           JoyCubit.get(context).checkBarcode(RestID);
           cubit.getRestaurant(RestID, context);
         },
         child: Container(
-            height: 200,
-            child: Row(
-              // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Expanded(
+          height: 200,
+          child: Stack(
+            children: [
+              restaurantModel.offerd == true
+                  ? ClipRRect(
+                child: Banner(
+                  message: 'offer',
+                  textStyle: TextStyle(
+                      fontSize: 16, fontWeight: FontWeight.bold),
+                  color: Colors.redAccent,
+                  location: BannerLocation.topEnd,
                   child: Container(
-                    margin: EdgeInsets.all(10.0),
-                    width: MediaQuery.of(context).size.width * 0.39,
-                    height: 200,
-                    decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: NetworkImage('${restaurantModel.imagePath}'),
-                          fit: BoxFit.fill,
-                        ),
-                        borderRadius: BorderRadius.circular(15)),
+                    height: 300,
                   ),
                 ),
-                Expanded(
-                  child: Container(
-                    child: Padding(
-                      padding: const EdgeInsets.all(15.0),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.max,
-                        // mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "${restaurantModel.serviceName}",
-                            // textDirection: TextDirection.rtl,
-                            style: TextStyle(
-                              color: Colors.blue,
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                            ),
+              )
+                  : Container(),
+              Row(
+                // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    child: Container(
+                      margin: EdgeInsets.all(10.0),
+                      width: MediaQuery.of(context).size.width * 0.39,
+                      height: 200,
+                      decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: NetworkImage('${restaurantModel.imagePath}'),
+                            fit: BoxFit.fill,
                           ),
-                          Text("${restaurantModel.serviceDescripition}",
+                          borderRadius: BorderRadius.circular(15)),
+                    ),
+                  ),
+                  Expanded(
+                    child: Container(
+                      child: Padding(
+                        padding: const EdgeInsets.all(15.0),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.max,
+                          // mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "${restaurantModel.serviceName}",
                               // textDirection: TextDirection.rtl,
-                              maxLines: 2,
                               style: TextStyle(
-                                color: Colors.yellow,
+                                color: Colors.blue,
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold,
-                              )),
-                          Spacer(),
-                          Row(
-                            children: [
-                              TextButton(
-                                onPressed: () {
-                                  cubit.getRestaurant(restaurantModel.id, context);
-                                },
-                                child: Text(
-                                  'See More',
-                                  style: TextStyle(fontSize: 16),
-                                ),
                               ),
-                              Spacer(),
-
-                            ],
-                          ),
-                        ],
+                            ),
+                            Text("${restaurantModel.serviceDescripition}",
+                                // textDirection: TextDirection.rtl,
+                                maxLines: 2,
+                                style: TextStyle(
+                                  color: Colors.yellow,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                )),
+                            Spacer(),
+                            Row(
+                              children: [
+                                TextButton(
+                                  onPressed: () {
+                                    cubit.getRestaurant(
+                                        restaurantModel.id, context);
+                                  },
+                                  child: Text(
+                                    'See More',
+                                    style: TextStyle(fontSize: 16),
+                                  ),
+                                ),
+                                Spacer(),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ],
-            )),
+                ],
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

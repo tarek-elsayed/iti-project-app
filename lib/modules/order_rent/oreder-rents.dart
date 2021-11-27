@@ -51,7 +51,21 @@ class OrderRentsScreen extends StatelessWidget {
                           return buildCard(order[index], context);
                         })),
               ),
-              fallback: (context) => Center(child: CircularProgressIndicator()),
+              fallback: (context) => Center(child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    'No Orders Yet',
+                    style:
+                    TextStyle(fontSize: 28.0, fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(
+                    height: 10.0,
+                  ),
+                  CircularProgressIndicator(),
+                ],
+              )),
             );
           },
         ));
@@ -131,6 +145,13 @@ class OrderRentsScreen extends StatelessWidget {
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
+                            Spacer(),
+                            IconButton(
+                                icon: Icon(Icons.delete),
+                                onPressed: () {
+                                  cubit.deleteIdRentUsers(
+                                      uId, orderModel.ID, context);
+                                })
                           ],
                         ),
                       ),

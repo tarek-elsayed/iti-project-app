@@ -155,39 +155,39 @@ class _AboutUSState extends State<AboutUS> {
             SizedBox(
               height: 20.0,
             ),
-            Container(
-              width: 300.00,
-
-              child: RaisedButton(
-                  onPressed: (){},
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(80.0)
-                  ),
-                  elevation: 5.0,
-                  padding: EdgeInsets.all(0.0),
-                  child: Ink(
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                          begin: Alignment.centerRight,
-                          end: Alignment.centerLeft,
-                          colors: [Colors.grey.shade400,
-                            Colors.blue,
-                            Colors.blue.shade900,]
-                      ),
-                      borderRadius: BorderRadius.circular(30.0),
-                    ),
-                    child: Container(
-
-                      constraints: BoxConstraints(maxWidth: 300.0, minHeight: 50.0),
-                      alignment: Alignment.center,
-                      child: Text("Contact us",
-                        style: TextStyle(color: Colors.white, fontSize: 26.0, fontWeight:FontWeight.w300),
-                      ),
-                    ),
-                  )
-              ),
-            ),
-            SizedBox(height: 20,)
+            // Container(
+            //   width: 300.00,
+            //
+            //   child: RaisedButton(
+            //       onPressed: (){},
+            //       shape: RoundedRectangleBorder(
+            //           borderRadius: BorderRadius.circular(80.0)
+            //       ),
+            //       elevation: 5.0,
+            //       padding: EdgeInsets.all(0.0),
+            //       child: Ink(
+            //         decoration: BoxDecoration(
+            //           gradient: LinearGradient(
+            //               begin: Alignment.centerRight,
+            //               end: Alignment.centerLeft,
+            //               colors: [Colors.grey.shade400,
+            //                 Colors.blue,
+            //                 Colors.blue.shade900,]
+            //           ),
+            //           borderRadius: BorderRadius.circular(30.0),
+            //         ),
+            //         child: Container(
+            //
+            //           constraints: BoxConstraints(maxWidth: 300.0, minHeight: 50.0),
+            //           alignment: Alignment.center,
+            //           child: Text("Contact us",
+            //             style: TextStyle(color: Colors.white, fontSize: 26.0, fontWeight:FontWeight.w300),
+            //           ),
+            //         ),
+            //       )
+            //   ),
+            // ),
+            // SizedBox(height: 20,)
           ],
         ),
       ),

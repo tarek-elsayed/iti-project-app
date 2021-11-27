@@ -149,8 +149,8 @@ class JoyErrorGetAllPlacesState extends JoyStates {
 
 
 class JoySuccessGetAllRentState extends JoyStates {
-  // final RestaurantModel model;
-  // JoySuccessGetAllRestaurantState(this.model);
+  // final RentModel model;
+  // JoySuccessGetAllRentState(this.model);
 }
 
 class JoyLoadingGetAllRentState extends JoyStates {}

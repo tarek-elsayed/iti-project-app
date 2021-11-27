@@ -276,7 +276,7 @@ class _RentDetailScreen extends State<RentDetailScreen> {
             decoration:
                 BoxDecoration(borderRadius: BorderRadius.circular(20.0)),
             child: Image(
-              image: NetworkImage("${rentModel.imagePath}"),
+              image: NetworkImage("${rentModel.imagePath[index]}"),
               width: double.infinity,
               fit: BoxFit.cover,
             ),

@@ -201,9 +201,10 @@ class JoyLayout extends StatelessWidget {
                       fontWeight: FontWeight.bold),
                 ),
                 onTap: () {
-                  navigateTo(context, OrdersScreen());
                   JoyCubit.get(context).showOrderHotels();
                   JoyCubit.get(context).showOrderRents();
+                  navigateTo(context, OrdersScreen());
+
                 }),
             ListTile(
               onTap: () {

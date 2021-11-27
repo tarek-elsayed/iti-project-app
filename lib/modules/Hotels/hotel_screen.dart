@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jooy/layout/joy_app/cubit/cubit.dart';
 import 'package:jooy/layout/joy_app/cubit/state.dart';
 import 'package:jooy/models/hotel_model.dart';
+import 'package:jooy/modules/common-widget/commin-widget.dart';
 import 'package:jooy/shared/components/constains.dart';
 
 class HotelScreen extends StatelessWidget {
@@ -57,9 +58,10 @@ class HotelScreen extends StatelessWidget {
       child: InkWell(
         onTap: () {
           HotelID = hotelModel.id;
-          print("hotelModel ${hotelModel.id}");
-          cubit.getHotels(hotelModel.id, context);
-          for (int j = 0; j < cubit.model.orderHotels.length; j++) {
+          print("hotelModel ${HotelID}");
+          cubit.getHotels(HotelID, context);
+          print("(( ${cubit.model.orderRent.length}");
+          for (int j = 0; j < cubit.model.orderHotels.length.toInt(); j++) {
             if (cubit.model.orderHotels[j] == hotelModel.id) {
               print('XXXXXXX');
               disableHotels = true;

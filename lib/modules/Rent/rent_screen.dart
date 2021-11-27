@@ -54,7 +54,12 @@ class RentScreen extends StatelessWidget {
       elevation: 15,
       child: InkWell(
         onTap: () {
-          cubit.getRent(rentModel.id, context);
+          print("//${rentModel.id}");
+          RentID=rentModel.id;
+          print("\\ ${rentModel.id}");
+          // cubit.updateRent(RentID);
+          cubit.getRent(RentID, context);
+
           for (int j = 0; j < cubit.model.orderRent.length; j++) {
             if (cubit.model.orderRent[j] == rentModel.id) {
               print(rentModel.id);
@@ -97,7 +102,7 @@ class RentScreen extends StatelessWidget {
                       height: 200,
                       decoration: BoxDecoration(
                           image: DecorationImage(
-                            image: NetworkImage('${rentModel.imagePath}'),
+                            image: NetworkImage('${rentModel.imagePath[0]}'),
                             fit: BoxFit.fill,
                           ),
                           borderRadius: BorderRadius.circular(15)),
