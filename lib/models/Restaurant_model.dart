@@ -50,6 +50,9 @@ class RestaurantModel {
   String brandName;
   //to Do list
   String imagePath ;
+  bool booked;
+  String mealCatgory;
+  List <BarcodesRest> barcodes;
 
 
   RestaurantModel({
@@ -64,10 +67,14 @@ class RestaurantModel {
     this.createdBy,
     this.offerd,
     this.brandName,
+    this.booked,
+    this.mealCatgory,
+    this.barcodes,
   });
 
   RestaurantModel.fromJson(Map<String, dynamic> json, [String ID]) {
     id = ID;
+    // id=json['id'];
     serviceName = json['serviceName'];
     servicePhone = json['servicePhone'];
     servicePrice = json['servicePrice'];
@@ -78,12 +85,53 @@ class RestaurantModel {
     offerd=json['offerd'];
     serviceDescripition=json['serviceDescripition'];
     brandName=json['brandName'];
+    booked=json['booked'];
+    mealCatgory=json['mealCatgory'];
+    if (json['Barcodes'] != null) {
+      barcodes = new List<BarcodesRest>() ;
+      json['Barcodes'].forEach((v) {
+        barcodes.add(new BarcodesRest.fromJson(v));
+      });
+    }
 
   }
 
   Map<String, dynamic> toMap() {
-    return {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['serviceName'] = this.serviceName;
+    data['servicePhone'] = this.servicePhone;
+    data['servicePrice'] = this.servicePrice;
+    data['imagePath'] = this.imagePath;
+    data['offerRatio'] = this.offerRatio;
+    data['createdAt'] = this.createdAt;
+    data['createdBy'] = this.createdBy;
+    data['offerd']=this.offerd;
+    data['serviceDescripition']=this.serviceDescripition;
+    data['brandName']=this.brandName;
+    data['booked']=this.booked;
+    data['mealCatgory']=this.mealCatgory;
 
-    };
+    if (this.barcodes != null) {
+      data['Barcodes'] = this.barcodes.map((v) => v.toMap()).toList();
+    }
+    return data;
+  }
+}
+class BarcodesRest {
+  String userId;
+  int barcode;
+
+  BarcodesRest({this.userId, this.barcode});
+
+  BarcodesRest.fromJson(Map<String, dynamic> json) {
+    userId = json['userId'];
+    barcode = json['barcode'];
+  }
+
+  Map<String, dynamic> toMap() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['serialNum'] = this.userId;
+    data['barcode'] = this.barcode;
+    return data;
   }
 }

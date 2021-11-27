@@ -2,7 +2,9 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:jooy/layout/joy_app/cubit/cubit.dart';
 import 'package:jooy/models/Restaurant_model.dart';
+import 'package:jooy/shared/components/constains.dart';
 
 
 ///Imgae Slider
@@ -20,9 +22,9 @@ class RestaurantDetailScreen extends StatefulWidget {
 
 class _RestaurantDetailScreen extends State<RestaurantDetailScreen> {
   double x = 0;
-  RestaurantModel model1;
+  RestaurantModel restaurantModel;
 
-  _RestaurantDetailScreen(this.model1);
+  _RestaurantDetailScreen(this.restaurantModel);
 
   @override
   Widget build(BuildContext context) {
@@ -46,33 +48,116 @@ class _RestaurantDetailScreen extends State<RestaurantDetailScreen> {
           ),
           onPressed: () {
             Navigator.pop(context);
-
           },
         ),
         elevation: 0,
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.grey[300],
       ),
       // backgroundColor: Colors.grey.shade100,
       body: Container(
         height: 1000,
-        decoration: BoxDecoration(color: Colors.white),
+        decoration: BoxDecoration(
+          // color: Colors.red,
+          gradient: LinearGradient(
+            colors: [
+              Colors.grey[300],
+              Color(0xff2B688A),
+              Colors.lightBlue[900],
+            ],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+        ),
         child: SingleChildScrollView(
           child: Column(
             children: [
-              Container(
-                  decoration:
-                      BoxDecoration(borderRadius: BorderRadius.circular(20)),
-                  height: 250,
-                  child: listImages(model1)
-                 ,
+              if (tarek != null)
+                Container(
+                  color: Colors.blue,
+                  height: 60.0,
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 20.0),
+                    child: ListTile(
+                      title: Text(
+                        'You already reserved ',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+
+                      leading: Icon(
+                        Icons.check_circle,
+                        color: Colors.white,
+                      ),
+                      trailing: RaisedButton(
+                        child: Text(
+                          'Show',
+                          style: TextStyle(fontSize: 16.0),
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            showDialog(
+                              context: context,
+                              builder: (context) => AlertDialog(
+                                title: ListTile(
+                                  leading: Icon(Icons.check_circle),
+                                  title: Text('Your BarCode'),
+                                  trailing: Padding(
+                                    padding:
+                                    const EdgeInsets.only(left: 8.0),
+                                    child: IconButton(
+                                      padding: EdgeInsets.only(left: 10.0),
+                                      icon: Icon(Icons.delete_forever),
+                                      onPressed: () {
+                                        setState(() {
+                                          JoyCubit.get(context)
+                                              .deleteBarCode(RestID);
+                                          Navigator.pop(context);
+
+                                        });
+                                      },
+                                    ),
+                                  ),
+                                ),
+                                content: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Text(
+                                        "$tarek",
+                                      ),
+                                    ]),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                    child: Text("OK"),
+                                  )
+                                ],
+                              ),
+                            );
+                          });
+                        },
+                        color: Colors.white,
+                        textColor: Colors.black,
+                      ),
+                    ),
                   ),
-              // SizedBox(height: 25,child: Divider(color: Colors.amber,thickness: 5,),),
+                ),
+              Container(
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20)),
+                  height: 250,
+                  child: imageSlider(restaurantModel)),
               SingleChildScrollView(
                 child: Padding(
                   padding: const EdgeInsets.all(15.0),
                   child: Container(
                     decoration: BoxDecoration(
-                        border: Border.all(width: 2, color: Colors.grey[700]),
+                        border:
+                        Border.all(width: 2, color: Colors.grey[700]),
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(10)),
                     child: Column(
@@ -80,70 +165,169 @@ class _RestaurantDetailScreen extends State<RestaurantDetailScreen> {
                       children: [
                         titleDetails(
                           title: "Restaurant Name",
-                          subtitle: "${model1.serviceName}",
+                          subtitle: "${restaurantModel.serviceName}",
                         ),
                         titleDetails(
                           title: "Phone",
-                          subtitle: "${model1.servicePhone}",
-                        ),
-
-                        titleDetails(
-                          title: "price",
-                          subtitle: "${model1.servicePrice}",
+                          subtitle: "${restaurantModel.servicePhone}",
                         ),
                         titleDetails(
-                          title: "serviceDescripition",
-                          subtitle: "${model1.serviceDescripition}",
+                          title: "Price",
+                          subtitle: "${restaurantModel.servicePrice}",
                         ),
-
-                        model1.offerd==true?titleDetails(
-                          title: "offer",
-                          subtitle: "${model1.offerRatio}",
-                        ):Container(),
+                        titleDetails(
+                          title: "Service Descripition",
+                          subtitle: "${restaurantModel.serviceDescripition}",
+                        ),
                       ],
                     ),
                   ),
                 ),
               ),
+              Row(
+                children: [
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: RaisedButton(
+                        color: colorHotels,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(5.0)),
+                        padding: const EdgeInsets.all(10.0),
+                        onPressed: disableHotels == false
+                            ? () {
+                          setState(() {});
+                          showDialog(
+                            context: context,
+                            builder: (context) => AlertDialog(
+                              title: Row(
+                                children: [
+                                  Icon(
+                                    Icons.shopping_cart,
+                                    color: Colors.blue,
+                                    size: 34,
+                                  ),
+                                  SizedBox(
+                                    width: 10.0,
+                                  ),
+                                  Text(
+                                    "Confirm to reserve",
+                                    style: TextStyle(
+                                        fontSize: 25,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ],
+                              ),
+                              content: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  // Text(
+                                  //   "Your Barcode is $random",
+                                  //   style:
+                                  //       TextStyle(fontWeight: FontWeight.bold),
+                                  // ),
+                                  SizedBox(
+                                    height: 15.0,
+                                  ),
+                                ],
+                              ),
+                              actions: [
+                                Row(
+                                  children: [
+                                    // RaisedButton(autofocus: ,)
+                                    ElevatedButton(
+                                      onPressed: () {
+                                        setState(() {
+                                          JoyCubit.get(context).generateBarCode(context);
+                                          JoyCubit.get(context).safeBarcode(random,serialNum);
+                                          Navigator.pop(context);
 
-              RaisedButton(
-                onPressed: () => showDialog(
-                  context: context,
-                  builder: (context) => AlertDialog(
-                    title: Text("Rate This App"),
-                    content: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text(
-                          "Please leave a star rating",
-                        ),
-                        SizedBox(
-                          height: 15.0,
-                        ),
-                        RatingBar.builder(
-                            maxRating: 1,
-                            itemBuilder: (context, _) => Icon(
-                                  Icons.star,
-                                  color: Colors.amber,
+
+                                        });
+                                      },
+                                      child: Text("Confirm"),
+                                      autofocus: disableHotels,
+                                    ),
+                                    SizedBox(
+                                      width: 15.0,
+                                    ),
+                                    ElevatedButton(
+                                      onPressed: () {
+                                        print('cancel');
+                                        Navigator.pop(context);
+                                      },
+                                      child: Text("Cancel"),
+                                    ),
+                                  ],
                                 ),
-                            onRatingUpdate: (rating) {
-                              this.x = rating;
-                              print(x);
-                            })
-                      ],
+                              ],
+                            ),
+
+                          );
+
+                        }
+                            : () {},
+                        child: Text(
+                          "$bookRest",
+                          style: TextStyle(
+                              fontSize: 25, fontWeight: FontWeight.w700),
+                        ),
+                      ),
                     ),
-                    actions: [
-                      TextButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        child: Text("OK"),
-                      )
-                    ],
                   ),
-                ),
-                child: Text("Rate US"),
-              ),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: RaisedButton(
+                        color: Colors.white,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(5.0)),
+                        padding: const EdgeInsets.all(10.0),
+                        onPressed: () => showDialog(
+                          context: context,
+                          builder: (context) => AlertDialog(
+                            title: Text("Rate This App"),
+                            content: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text(
+                                  "Please leave a star rating",
+                                ),
+                                SizedBox(
+                                  height: 15.0,
+                                ),
+                                RatingBar.builder(
+                                    maxRating: 1,
+                                    itemBuilder: (context, _) => Icon(
+                                      Icons.star,
+                                      color: Colors.amber,
+                                    ),
+                                    onRatingUpdate: (rating) {
+                                      this.x = rating;
+                                      print(x);
+                                    })
+                              ],
+                            ),
+                            actions: [
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                child: Text("OK"),
+                              )
+                            ],
+                          ),
+                        ),
+                        child: Text(
+                          "Rate US",
+                          style: TextStyle(
+                              fontSize: 25, fontWeight: FontWeight.w700),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              )
             ],
           ),
         ),
@@ -151,15 +335,7 @@ class _RestaurantDetailScreen extends State<RestaurantDetailScreen> {
     );
   }
 
-
-  // List item = [
-  //   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTTjzMzuQcaLm52XRb-od5xmOIPCHUk1Mc3B_R6fgLW6-wSu6s5DBa6NXIHXQy49ff6KHk&usqp=CAU",
-  //   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTTjzMzuQcaLm52XRb-od5xmOIPCHUk1Mc3B_R6fgLW6-wSu6s5DBa6NXIHXQy49ff6KHk&usqp=CAU",
-  //   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTTjzMzuQcaLm52XRb-od5xmOIPCHUk1Mc3B_R6fgLW6-wSu6s5DBa6NXIHXQy49ff6KHk&usqp=CAU",
-  //   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTTjzMzuQcaLm52XRb-od5xmOIPCHUk1Mc3B_R6fgLW6-wSu6s5DBa6NXIHXQy49ff6KHk&usqp=CAU",
-  // ];
-
-  Widget listImages(RestaurantModel restaurantModel) {
+  Widget imageSlider(RestaurantModel restaurantModel) {
     return Container(
       child: CarouselSlider.builder(
         itemCount: 1,
@@ -222,90 +398,3 @@ class _RestaurantDetailScreen extends State<RestaurantDetailScreen> {
     );
   }
 }
-// Container(
-//
-// height: 200,
-// child:  Padding(
-// padding: const EdgeInsets.symmetric(
-// horizontal: 5.0, vertical: 0.0),
-// child: Container(
-// decoration: BoxDecoration(
-// borderRadius: BorderRadius.circular(20),
-// ),
-// height: 250,
-// child: xB(),
-// ),
-// ),
-// ),
-
-// Container(
-// child: Padding(
-// padding: const EdgeInsets.symmetric(horizontal: 10.0),
-// child: SingleChildScrollView(
-// physics: BouncingScrollPhysics(),
-// child: Container(
-// color: Colors.amber,
-// child: Column(
-// mainAxisAlignment: MainAxisAlignment.start,
-// children: [
-// titleDetails(
-// title: 'Shop',
-// subtitle: "Hello",
-// color: Colors.grey,
-// ),titleDetails(
-// title: 'Shop',
-// subtitle: "Hello",
-// color: Colors.grey,
-// ),titleDetails(
-// title: 'Shop',
-// subtitle: "Hello",
-// color: Colors.grey,
-// ),titleDetails(
-// title: 'Shop',
-// subtitle: "Hello",
-// color: Colors.grey,
-// ),titleDetails(
-// title: 'Shop',
-// subtitle: "Hello",
-// color: Colors.grey,
-// ),titleDetails(
-// title: 'Shop',
-// subtitle: "Hello",
-// color: Colors.grey,
-// ),titleDetails(
-// title: 'Shop',
-// subtitle: "Hello",
-// color: Colors.grey,
-// ),titleDetails(
-// title: 'Shop',
-// subtitle: "Hello",
-// color: Colors.grey,
-// ),titleDetails(
-// title: 'Shop',
-// subtitle: "Hello",
-// color: Colors.grey,
-// ),
-// ],
-// ),
-// ),
-// ),
-// ),
-// )
-
-// Widget imageSlider(context) {
-//   return Swiper(
-//     scrollDirection: Axis.horizontal,
-//     duration: 2000,
-//     autoplay: true,
-//     itemBuilder: (context, index) {
-//       return Image.network(
-//         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTTjzMzuQcaLm52XRb-od5xmOIPCHUk1Mc3B_R6fgLW6-wSu6s5DBa6NXIHXQy49ff6KHk&usqp=CAU",
-//         fit: BoxFit.fitHeight,
-//       );
-//     },
-//     itemCount: 5,
-//     viewportFraction: 0.8,
-//     scale: 0.8,
-//   );
-// }
-//

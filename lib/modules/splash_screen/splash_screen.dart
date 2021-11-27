@@ -16,7 +16,7 @@ class _SplashScreen extends State<SplashScreen> {
     // TODO: implement initState
     super.initState();
     Timer(Duration(seconds: 3), (){
-      navigateTo(context, JoyLayout());
+      navigateAndFinish(context, JoyLayout());
     });
   }
   @override

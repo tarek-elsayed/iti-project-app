@@ -45,22 +45,6 @@ class HotelScreen extends StatelessWidget {
     ));
   }
 
-  // Widget buildOver(HotelModel model,context){
-  //   int count = JoyCubit.get(context).hotel.length;
-  //   return GridView.count(
-  //
-  //       shrinkWrap: true,
-  //       physics: NeverScrollableScrollPhysics(),
-  //       crossAxisSpacing: 1.0,
-  //       mainAxisSpacing: 1.0,
-  //       childAspectRatio: 1 / 1.79,
-  //       scrollDirection: Axis.vertical,
-  //       crossAxisCount: 2,
-  //       children: List.generate(
-  //         count,
-  //             (index) => buildCard(model.toMap()[index],context),
-  //       ));
-  // }
   Widget buildCard(HotelModel hotelModel, context) {
     var cubit = JoyCubit.get(context);
     var index = JoyCubit.get(context).hotel.length;
@@ -72,33 +56,45 @@ class HotelScreen extends StatelessWidget {
       elevation: 15,
       child: InkWell(
         onTap: () {
-          JoyCubit.get(context).checkBarcode(hotelModel.id);
-          HotelID=hotelModel.id;
+          HotelID = hotelModel.id;
           print("hotelModel ${hotelModel.id}");
-          JoyCubit.get(context).createSerialNum(hotelModel.id);
           cubit.getHotels(hotelModel.id, context);
+          for (int j = 0; j < cubit.model.orderHotels.length; j++) {
+            if (cubit.model.orderHotels[j] == hotelModel.id) {
+              print('XXXXXXX');
+              disableHotels = true;
+              bookHotels = 'Booked';
+              colorHotels = Colors.grey[800];
+              break;
+            }
+            print('ZZZZZZ');
+            disableHotels = false;
+            bookHotels = 'Book Now';
+            colorHotels = Colors.white;
+          }
         },
         child: Container(
-            height: 200,
-            child: Stack(
-              children:[
-                //TODO AFTER VIDEO
-                // hotelModel.offerd==true?ClipRRect(
-                //   child: Banner(
-                //     message: 'offer',
-                //     textStyle:TextStyle(
-                //         fontSize: 16,
-                //         fontWeight: FontWeight.bold
-                //     ) ,
-                //     color:Colors.redAccent,
-                //     location: BannerLocation.topEnd,
-                //     child: Container(height: 300,),
-                //   ),
-                // ):Container(),
-                Row(
+          height: 200,
+          child: Stack(
+            children: [
+              //TODO AFTER VIDEO
+              hotelModel.offerd == true
+                  ? ClipRRect(
+                      child: Banner(
+                        message: 'offer',
+                        textStyle: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold),
+                        color: Colors.redAccent,
+                        location: BannerLocation.topEnd,
+                        child: Container(
+                          height: 300,
+                        ),
+                      ),
+                    )
+                  : Container(),
+              Row(
                 // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-
                   Expanded(
                     child: Container(
                       margin: EdgeInsets.all(10.0),
@@ -106,7 +102,6 @@ class HotelScreen extends StatelessWidget {
                       height: 200,
                       decoration: BoxDecoration(
                           image: DecorationImage(
-
                             image: NetworkImage('${hotelModel.imagePath}'),
                             fit: BoxFit.fill,
                           ),
@@ -130,7 +125,6 @@ class HotelScreen extends StatelessWidget {
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold,
                               ),
-
                             ),
                             Text("${hotelModel.serviceDescripition}",
                                 // textDirection: TextDirection.rtl,
@@ -144,15 +138,33 @@ class HotelScreen extends StatelessWidget {
                             Row(
                               children: [
                                 TextButton(
-                                  onPressed: (){},
-                                  child: Text('See More',
-                                    style: TextStyle(fontSize: 16),),
-                              ),
+                                  onPressed: () {
+                                    cubit.getHotels(hotelModel.id, context);
+                                  },
+                                  child: Text(
+                                    'See More',
+                                    style: TextStyle(fontSize: 16),
+                                  ),
+                                ),
                                 Spacer(),
-                                Icon(Icons.favorite)
+                                Column(
+                                  children: [
+                                    CircleAvatar(
+                                      radius: 18,
+                                      child: Text(
+                                        '${hotelModel.roomNum}',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.w700,
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(height: 5.0,),
+                                    Text("Rooms"),
+
+                                  ],
+                                ),
                               ],
                             ),
-
                           ],
                         ),
                       ),
@@ -160,157 +172,10 @@ class HotelScreen extends StatelessWidget {
                   ),
                 ],
               ),
-            ]
-            ),
-        ),
-      ),
-    );
-  }
-}
-/*
-Container(
-      child: Center(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10.0),
-          child: Column(
-            children: [
-              Container(
-                child: Card(
-                  clipBehavior: Clip.antiAlias,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20.0),
-                  ),
-                  child: InkWell(
-                    onTap: () {
-                      JoyCubit.get(context).getHotels(hotelModel.id, context);
-                    },
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Stack(
-                          alignment: Alignment.bottomLeft,
-                          children: [
-                            Image.network(
-                              "${hotelModel.imagePath}",
-                              height: 200,
-                              width: double.infinity,
-                              fit: BoxFit.fill,
-                            ),
-                            Container(
-                              width: double.infinity,
-                              color: Colors.black.withOpacity(.8),
-                              child: Text(
-                                "${hotelModel.serviceName}",
-                                style: TextStyle(
-                                    color: Colors.white, fontSize: 28),
-                              ),
-                            ),
-                          ],
-                        ),
-                        Padding(
-                          padding: EdgeInsets.all(10.0),
-                          child: Column(
-                            children: [
-                              Text("${hotelModel.serviceName}"),
-                              // Text("${hotelModel.serviceDescripition}"),
-                              // Text("Hi"),
-                            ],
-                          ),
-                        ),
-                        ButtonBar(
-                          children: [
-                            TextButton(
-                              onPressed: () {
-                                // JoyCubit.get(context)
-                                //     .getHotels(hotelModel.id, context);
-                                // FirebaseFirestore.instance.collection("Fav").doc().set({
-                                //   "hotel":'ahmed',
-                                //   "idItem":"1",
-                                //   "idUser":"5",
-                                //
-                                // }).then((value){
-                                //   print('fffff');
-                                // });
-                              },
-                              child: Text(
-                                "See More",
-                                style: TextStyle(
-                                  color: Colors.lightBlue[900],
-
-                                ),
-                              ),
-                            ),
-                            Spacer(),
-                            IconButton(
-                              onPressed: () {
-                                // if (hotelModel.fav == true) {
-                                //   hotelModel.fav = false;
-                                // } else {
-                                //   hotelModel.fav = true;
-                                // }
-                                //
-                                // cubit.updateHotel(
-                                //   id: hotelModel.id,
-                                //   hotelName: hotelModel.hotelName,
-                                //   details: hotelModel.details,
-                                //   description: hotelModel.description,
-                                //   images: hotelModel.images,
-                                //   fav: hotelModel.fav,
-                                // );
-                              },
-                              icon: CircleAvatar(
-                                radius: 18.0,
-                                backgroundColor: Colors.lightBlue[900],
-                                child: Icon(Icons.favorite_outline),
-                              ),
-                            )
-                          ],
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-              ),
             ],
           ),
         ),
       ),
     );
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    Container(
-            // color: Colors.yellow,
-            child: SingleChildScrollView(
-                physics: BouncingScrollPhysics(),
-                child: GridView.count(
-                  shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
-                  crossAxisSpacing: 1.0,
-                  mainAxisSpacing: 1.0,
-                  childAspectRatio: 1 / 1.79,
-                  scrollDirection: Axis.vertical,
-                  crossAxisCount: 2,
-                  children: List.generate(
-                    hotel.length,
-                    (index) => buildCard(hotel[index], context),
-                  ),
-                )),
-          ),
- */
+  }
+}

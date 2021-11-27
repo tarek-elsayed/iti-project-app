@@ -61,7 +61,7 @@ class ProfileScreen extends StatelessWidget {
                             ),
                             child: CircleAvatar(
                               radius: 60,
-                              backgroundColor: Colors.lightBlue[700],
+                              backgroundColor: Colors.white,
                               child: CircleAvatar(
                                 radius: 83,
                                 backgroundImage: image == null
@@ -74,11 +74,11 @@ class ProfileScreen extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.only(left: 125, top: 150),
                           child: CircleAvatar(
-                            backgroundColor: Colors.white,
+                            backgroundColor: Colors.blue,
                             child: IconButton(
                               icon: Icon(
                                 Icons.camera_alt,
-                                color: Colors.blue,
+                                color: Colors.white,
                                 size: 25,
                               ),
                               onPressed: () {
@@ -184,6 +184,7 @@ class ProfileScreen extends StatelessWidget {
                             },
                             text: 'Logout',
                           ),
+                          SizedBox(height: 20.0,),
                         ],
                       ),
                     )

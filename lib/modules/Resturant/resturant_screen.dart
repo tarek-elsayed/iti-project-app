@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jooy/layout/joy_app/cubit/cubit.dart';
 import 'package:jooy/layout/joy_app/cubit/state.dart';
 import 'package:jooy/models/Restaurant_model.dart';
+import 'package:jooy/shared/components/constains.dart';
 
 class ResturantScreen extends StatelessWidget {
   @override
@@ -56,11 +57,12 @@ class ResturantScreen extends StatelessWidget {
       elevation: 15,
       child: InkWell(
         onTap: () {
-          // JoyCubit.get(context).checkBarcode(hotelModel.id);
-          // HotelID=hotelModel.id;
+          // JoyCubit.get(context).checkBarcode(restaurantModel.id);
+          RestID=restaurantModel.id;
           // print("hotelModel ${hotelModel.id}");
-          // JoyCubit.get(context).createSerialNum(hotelModel.id);
-          // cubit.getHotels(hotelModel.id, context);
+          JoyCubit.get(context).createSerialNum(restaurantModel.id);
+          JoyCubit.get(context).checkBarcode(RestID);
+          cubit.getRestaurant(RestID, context);
         },
         child: Container(
             height: 200,
@@ -110,14 +112,16 @@ class ResturantScreen extends StatelessWidget {
                           Row(
                             children: [
                               TextButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  cubit.getRestaurant(restaurantModel.id, context);
+                                },
                                 child: Text(
                                   'See More',
                                   style: TextStyle(fontSize: 16),
                                 ),
                               ),
                               Spacer(),
-                              Icon(Icons.favorite)
+
                             ],
                           ),
                         ],

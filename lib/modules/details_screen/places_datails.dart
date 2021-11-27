@@ -34,14 +34,14 @@ class _PlaceScreenState extends State<PlaceScreen> {
               style: TextStyle(
                 fontSize: 28,
                 fontWeight: FontWeight.bold,
-                color: Colors.black,
+                color: Colors.white,
               ),
             ),
             centerTitle: true,
             leading: IconButton(
               icon: Icon(
                 Icons.arrow_back,
-                color: Colors.black,
+                color: Colors.white,
                 size: 28,
               ),
               onPressed: () {
@@ -49,7 +49,7 @@ class _PlaceScreenState extends State<PlaceScreen> {
               },
             ),
             elevation: 0,
-            backgroundColor: Colors.grey[300],
+            backgroundColor: Colors.blue,
           ),
           // backgroundColor: Colors.grey.shade100,
           body: Container(
@@ -95,13 +95,18 @@ class _PlaceScreenState extends State<PlaceScreen> {
                               title: "Service Address",
                               subtitle: "${place.address}",
                             ),
-                            titleDetails(
-                              title: "Price",
-                              subtitle: "${place.price[0]} For Egyptian",
-                            ),
+
                             titleDetails(
                               title: "Details",
                               subtitle: "${place.details}",
+                            ),
+                            titleDetails(
+                              title: "Price",
+                              subtitle: "${place.price[0]}/Pound , ${place.price[1]}/Doller",
+                            ),
+                            titleDetails(
+                              title: "Price For Sound and Light",
+                              subtitle: "${place.address}",
                             ),
                           ],
                         ),
@@ -110,153 +115,7 @@ class _PlaceScreenState extends State<PlaceScreen> {
                   ),
                   Row(
                     children: [
-                      // Expanded(
-                      //   child: Padding(
-                      //     padding: const EdgeInsets.all(10.0),
-                      //     child: RaisedButton(
-                      //       color: color,
-                      //       shape: RoundedRectangleBorder(
-                      //           borderRadius: BorderRadius.circular(5.0)),
-                      //       padding: const EdgeInsets.all(10.0),
-                      //       onPressed: disable == false
-                      //           ? () {
-                      //         setState(() {});
-                      //         showDialog(
-                      //           context: context,
-                      //           builder: (context) => AlertDialog(
-                      //             title: Row(
-                      //               children: [
-                      //                 Icon(
-                      //                   Icons.shopping_cart,
-                      //                   color: Colors.blue,
-                      //                   size: 34,
-                      //                 ),
-                      //                 SizedBox(
-                      //                   width: 10.0,
-                      //                 ),
-                      //                 Text(
-                      //                   "Confirm to reserve",
-                      //                   style: TextStyle(
-                      //                       fontSize: 25,
-                      //                       fontWeight: FontWeight.bold),
-                      //                 ),
-                      //               ],
-                      //             ),
-                      //             content: Column(
-                      //               mainAxisSize: MainAxisSize.min,
-                      //               children: [
-                      //                 // Text(
-                      //                 //   "Your Barcode is $random",
-                      //                 //   style:
-                      //                 //       TextStyle(fontWeight: FontWeight.bold),
-                      //                 // ),
-                      //                 SizedBox(
-                      //                   height: 15.0,
-                      //                 ),
-                      //               ],
-                      //             ),
-                      //             actions: [
-                      //               Row(
-                      //                 children: [
-                      //                   // RaisedButton(autofocus: ,)
-                      //                   ElevatedButton(
-                      //                     onPressed: () {
-                      //                       setState(() {
-                      //                         print(
-                      //                             "pppp ${hotelModel.id}");
-                      //                         print("pppp ${HotelID}");
-                      //                         JoyCubit.get(context)
-                      //                             .generateBarCode(
-                      //                             context);
-                      //                         JoyCubit.get(context)
-                      //                             .safeBarcode(
-                      //                             random, serialNum);
-                      //                         disable = true;
-                      //                         book = 'Booked';
-                      //                         color = Colors.grey[300];
-                      //
-                      //                         Navigator.pop(context);
-                      //                       });
-                      //                     },
-                      //                     child: Text("Confirm"),
-                      //                     autofocus: disable,
-                      //                   ),
-                      //                   SizedBox(
-                      //                     width: 15.0,
-                      //                   ),
-                      //                   ElevatedButton(
-                      //                     onPressed: () {
-                      //                       print('cancel');
-                      //                       Navigator.pop(context);
-                      //                     },
-                      //                     child: Text("Cancel"),
-                      //                   ),
-                      //                 ],
-                      //               ),
-                      //             ],
-                      //           ),
-                      //         );
-                      //       }
-                      //           : () {},
-                      //       child: Text(
-                      //         "$book",
-                      //         style: TextStyle(
-                      //             fontSize: 25, fontWeight: FontWeight.w700),
-                      //       ),
-                      //     ),
-                      //   ),
-                      // ),
-                      // Expanded(
-                      //   child: Padding(
-                      //     padding: const EdgeInsets.all(10.0),
-                      //     child: RaisedButton(
-                      //       color: Colors.white,
-                      //       shape: RoundedRectangleBorder(
-                      //           borderRadius: BorderRadius.circular(5.0)),
-                      //       padding: const EdgeInsets.all(10.0),
-                      //       onPressed: () => showDialog(
-                      //         context: context,
-                      //         builder: (context) => AlertDialog(
-                      //           title: Text("Rate This App"),
-                      //           content: Column(
-                      //             mainAxisSize: MainAxisSize.min,
-                      //             children: [
-                      //               Text(
-                      //                 "Please leave a star rating",
-                      //               ),
-                      //               SizedBox(
-                      //                 height: 15.0,
-                      //               ),
-                      //               RatingBar.builder(
-                      //                   maxRating: 1,
-                      //                   itemBuilder: (context, _) => Icon(
-                      //                     Icons.star,
-                      //                     color: Colors.amber,
-                      //                   ),
-                      //                   onRatingUpdate: (rating) {
-                      //                     this.x = rating;
-                      //                     print(x);
-                      //                   })
-                      //             ],
-                      //           ),
-                      //           actions: [
-                      //             TextButton(
-                      //               onPressed: () {
-                      //                 Navigator.pop(context);
-                      //               },
-                      //               child: Text("OK"),
-                      //             )
-                      //           ],
-                      //         ),
-                      //       ),
-                      //       child: Text(
-                      //         "Rate US",
-                      //         style: TextStyle(
-                      //             fontSize: 25, fontWeight: FontWeight.w700),
-                      //       ),
-                      //     ),
-                      //   ),
-                      // ),
+
                     ],
                   )
                 ],
@@ -339,5 +198,3 @@ class _PlaceScreenState extends State<PlaceScreen> {
   }
 
 }
-/*
- */

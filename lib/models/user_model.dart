@@ -49,6 +49,8 @@ class UserModel {
   String image;
   String phone;
   List<Barcodes> barcodes;
+  List orderHotels;
+  List orderRent;
 
   UserModel({
     this.uId,
@@ -58,6 +60,8 @@ class UserModel {
     this.image,
     this.phone,
     this.barcodes,
+    this.orderHotels,
+    this.orderRent,
   });
 
   UserModel.fromJson(Map<String, dynamic> json) {
@@ -67,6 +71,8 @@ class UserModel {
     name = json['name'];
     image = json['image'];
     phone = json['phone'];
+    orderHotels=json['orderHotels'];
+    orderRent=json['orderRent'];
     if (json['Barcodes'] != null) {
       barcodes = new List<Barcodes>();
       json['Barcodes'].forEach((v) {
@@ -83,6 +89,8 @@ class UserModel {
     data['name'] = this.name;
     data['image'] = this.image;
     data['phone'] = this.phone;
+    data['orderRent'] = this.orderRent;
+    data['orderHotels']=this.orderHotels;
     if (this.barcodes != null) {
       data['Barcodes'] = this.barcodes.map((v) => v.toMap()).toList();
     }

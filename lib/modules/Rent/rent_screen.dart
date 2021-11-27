@@ -1,11 +1,11 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+
 import 'package:conditional_builder/conditional_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jooy/layout/joy_app/cubit/cubit.dart';
 import 'package:jooy/layout/joy_app/cubit/state.dart';
-import 'package:jooy/models/hotel_model.dart';
 import 'package:jooy/models/rent_model.dart';
+import 'package:jooy/shared/components/constains.dart';
 
 class RentScreen extends StatelessWidget {
   @override
@@ -45,7 +45,7 @@ class RentScreen extends StatelessWidget {
   }
 
   Widget buildCard(RentModel rentModel, context) {
-    // var cubit = JoyCubit.get(context);
+    var cubit = JoyCubit.get(context);
     return Card(
       margin: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
       shape: RoundedRectangleBorder(
@@ -54,78 +54,119 @@ class RentScreen extends StatelessWidget {
       elevation: 15,
       child: InkWell(
         onTap: () {
-          // JoyCubit.get(context).checkBarcode(hotelModel.id);
-          // HotelID=hotelModel.id;
-          // print("hotelModel ${hotelModel.id}");
-          // JoyCubit.get(context).createSerialNum(hotelModel.id);
-          // cubit.getHotels(hotelModel.id, context);
+          cubit.getRent(rentModel.id, context);
+          for (int j = 0; j < cubit.model.orderRent.length; j++) {
+            if (cubit.model.orderRent[j] == rentModel.id) {
+              print(rentModel.id);
+              print(cubit.model.orderRent[j]);
+              disableRent = true;
+              bookRent = 'Booked';
+              colorRent = Colors.grey[800];
+              break;
+            }
+            print('ZZZZZZ');
+            disableRent = false;
+            bookRent = 'Book Now';
+            colorRent = Colors.white;
+          }
         },
         child: Container(
-            height: 200,
-            child: Row(
-              // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Expanded(
+          height: 200,
+          child: Stack(
+            children: [
+              rentModel.offerd == true
+                  ? ClipRRect(
+                child: Banner(
+                  message: 'offer',
+                  textStyle: TextStyle(
+                      fontSize: 16, fontWeight: FontWeight.bold),
+                  color: Colors.redAccent,
+                  location: BannerLocation.topEnd,
                   child: Container(
-                    margin: EdgeInsets.all(10.0),
-                    width: MediaQuery.of(context).size.width * 0.39,
-                    height: 200,
-                    decoration: BoxDecoration(
-                        image: DecorationImage(
-
-                          image: NetworkImage('${rentModel.imagePath}'),
-                          fit: BoxFit.fill,
-                        ),
-                        borderRadius: BorderRadius.circular(15)),
+                    height: 300,
                   ),
                 ),
-                Expanded(
-                  child: Container(
-                    child: Padding(
-                      padding: const EdgeInsets.all(15.0),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.max,
-                        // mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "${rentModel.serviceName}",
-                            // textDirection: TextDirection.rtl,
-                            style: TextStyle(
-                              color: Colors.blue,
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                            ),
-
+              )
+                  : Container(),
+              Row(
+                children: [
+                  Expanded(
+                    child: Container(
+                      margin: EdgeInsets.all(10.0),
+                      width: MediaQuery.of(context).size.width * 0.39,
+                      height: 200,
+                      decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: NetworkImage('${rentModel.imagePath}'),
+                            fit: BoxFit.fill,
                           ),
-                          Text("${rentModel.serviceDescripition}",
+                          borderRadius: BorderRadius.circular(15)),
+                    ),
+                  ),
+                  Expanded(
+                    child: Container(
+                      child: Padding(
+                        padding: const EdgeInsets.all(15.0),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.max,
+                          // mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "${rentModel.serviceName}",
                               // textDirection: TextDirection.rtl,
-                              maxLines: 2,
                               style: TextStyle(
-                                color: Colors.yellow,
+                                color: Colors.blue,
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold,
-                              )),
-                          Spacer(),
-                          Row(
-                            children: [
-                              TextButton(
-                                onPressed: (){},
-                                child: Text('See More',
-                                  style: TextStyle(fontSize: 16),),
                               ),
-                              Spacer(),
-                              Icon(Icons.favorite)
-                            ],
-                          ),
+                            ),
+                            Text("${rentModel.serviceDescripition}",
+                                // textDirection: TextDirection.rtl,
+                                maxLines: 2,
+                                style: TextStyle(
+                                  color: Colors.yellow,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                )),
+                            Spacer(),
+                            Row(
+                              children: [
+                                TextButton(
+                                  onPressed: () {},
+                                  child: Text(
+                                    'See More',
+                                    style: TextStyle(fontSize: 16),
+                                  ),
+                                ),
+                                Spacer(),
+                                Column(
+                                  children: [
+                                    CircleAvatar(
+                                      radius: 18,
+                                      child: Text(
+                                        '${rentModel.roomNum}',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.w700,
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(height: 5.0,),
+                                    Text("Units"),
 
-                        ],
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ],
-            ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -98,87 +98,7 @@ class _HotelDetailScreen extends State<HotelDetailScreen> {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  if (tarek != null)
-                    Container(
-                      color: Colors.blue,
-                      height: 60.0,
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 20.0),
-                        child: ListTile(
-                          title: Text(
-                            'You already reserved ',
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                            ),
-                          ),
-                          // subtitle: Text(
-                          //   '$random',
-                          //   style: TextStyle(
-                          //       color: Colors.black, fontWeight: FontWeight.bold),
-                          // ),
-                          leading: Icon(
-                            Icons.check_circle,
-                            color: Colors.white,
-                          ),
-                          trailing: RaisedButton(
-                            child: Text(
-                              'Show',
-                              style: TextStyle(fontSize: 16.0),
-                            ),
-                            onPressed: () {
-                              setState(() {
-                                showDialog(
-                                  context: context,
-                                  builder: (context) => AlertDialog(
-                                    title: ListTile(
-                                      leading: Icon(Icons.check_circle),
-                                      title: Text('Your BarCode'),
-                                      trailing: Padding(
-                                        padding:
-                                            const EdgeInsets.only(left: 8.0),
-                                        child: IconButton(
-                                          padding: EdgeInsets.only(left: 10.0),
-                                          icon: Icon(Icons.delete_forever),
-                                          onPressed: () {
-                                            setState(() {
-                                              JoyCubit.get(context)
-                                                  .deleteBarCode(HotelID);
-                                              Navigator.pop(context);
-                                              // random=null;
-                                              // print("QQQQQ $random");
-                                              // Navigator.pop(context);
-                                            });
-                                          },
-                                        ),
-                                      ),
-                                    ),
-                                    content: Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          Text(
-                                            "$tarek",
-                                          ),
-                                        ]),
-                                    actions: [
-                                      TextButton(
-                                        onPressed: () {
-                                          Navigator.pop(context);
-                                        },
-                                        child: Text("OK"),
-                                      )
-                                    ],
-                                  ),
-                                );
-                              });
-                            },
-                            color: Colors.white,
-                            textColor: Colors.black,
-                          ),
-                        ),
-                      ),
-                    ),
+
                   Container(
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20)),
@@ -223,11 +143,11 @@ class _HotelDetailScreen extends State<HotelDetailScreen> {
                         child: Padding(
                           padding: const EdgeInsets.all(10.0),
                           child: RaisedButton(
-                            color: color,
+                            color: colorHotels,
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(5.0)),
                             padding: const EdgeInsets.all(10.0),
-                            onPressed: disable == false
+                            onPressed: disableHotels == false
                                 ? () {
                                     setState(() {});
                                     showDialog(
@@ -271,24 +191,18 @@ class _HotelDetailScreen extends State<HotelDetailScreen> {
                                               ElevatedButton(
                                                 onPressed: () {
                                                   setState(() {
-                                                    print(
-                                                        "pppp ${hotelModel.id}");
-                                                    print("pppp ${HotelID}");
-                                                    JoyCubit.get(context)
-                                                        .generateBarCode(
-                                                            context);
-                                                    JoyCubit.get(context)
-                                                        .safeBarcode(
-                                                            random, serialNum);
-                                                    disable = true;
-                                                    book = 'Booked';
-                                                    color = Colors.grey[300];
 
+                                                    JoyCubit.get(context)
+                                                        .setBookHotel(HotelID,context);
+                                                    JoyCubit.get(context).getAllHotel();
+                                                    disableHotels = true;
+                                                    bookHotels = 'Booked';
+                                                    colorHotels = Colors.grey[800];
                                                     Navigator.pop(context);
                                                   });
                                                 },
                                                 child: Text("Confirm"),
-                                                autofocus: disable,
+                                                autofocus: disableHotels,
                                               ),
                                               SizedBox(
                                                 width: 15.0,
@@ -308,7 +222,7 @@ class _HotelDetailScreen extends State<HotelDetailScreen> {
                                   }
                                 : () {},
                             child: Text(
-                              "$book",
+                              "$bookHotels",
                               style: TextStyle(
                                   fontSize: 25, fontWeight: FontWeight.w700),
                             ),
@@ -377,35 +291,7 @@ class _HotelDetailScreen extends State<HotelDetailScreen> {
     );
   }
 
-  /*
- setState(() {
-                                              if (serialNum == false) {
-                                                random =Random().nextDouble() * 150;
-                                                serialNum = true;
-                                                //   showToast(
-                                                //     text: "your code is ${random} save it !",
 
-                                                final snackBar = SnackBar(
-                                                  duration:
-                                                      Duration(seconds: 5),
-                                                  backgroundColor: Colors.black,
-                                                  content: Text(
-                                                      'your code is $random'),
-                                                  action: SnackBarAction(
-                                                    textColor: Colors.white,
-                                                    label: 'Undo',
-                                                    onPressed: () {
-                                                      // Some code to undo the change.
-                                                    },
-                                                  ),
-                                                );
-                                                ScaffoldMessenger.of(context)
-                                                    .showSnackBar(snackBar);
-                                                // );
-                                              }
-                                              Navigator.pop(context);
-                                            });
-  */
 
   Widget imageSlider(
     HotelModel hotelModel,

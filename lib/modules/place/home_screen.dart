@@ -67,88 +67,88 @@ class Place extends StatelessWidget {
 
   Widget buildCard(PlacesModel placesModel, BuildContext context) {
     var cubit = JoyCubit.get(context);
-    return
-      Card(
-        margin: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(15.0),
-        ),
-        elevation: 15,
-        child: InkWell(
-          onTap: () {
-            // JoyCubit.get(context).checkBarcode(hotelModel.id);
-            // HotelID=hotelModel.id;
-            // print("hotelModel ${hotelModel.id}");
-            // JoyCubit.get(context).createSerialNum(hotelModel.id);
-            cubit.getPlace(placesModel.id, context);
-          },
-          child: Container(
-              height: 200,
-              child: Row(
-                // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    child: Container(
-                      margin: EdgeInsets.all(10.0),
-                      width: MediaQuery.of(context).size.width * 0.39,
-                      height: 200,
-                      decoration: BoxDecoration(
-                          image: DecorationImage(
-
-                            image: NetworkImage('${placesModel.images[0]}'),
-                            fit: BoxFit.fill,
+    return Card(
+      margin: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(15.0),
+      ),
+      elevation: 15,
+      child: InkWell(
+        onTap: () {
+          // JoyCubit.get(context).checkBarcode(hotelModel.id);
+          // HotelID=hotelModel.id;
+          // print("hotelModel ${hotelModel.id}");
+          // JoyCubit.get(context).createSerialNum(hotelModel.id);
+          cubit.getPlace(placesModel.id, context);
+        },
+        child: Container(
+          height: 200,
+          child: Row(
+            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                child: Container(
+                  margin: EdgeInsets.all(10.0),
+                  width: MediaQuery.of(context).size.width * 0.39,
+                  height: 200,
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: NetworkImage('${placesModel.images[0]}'),
+                        fit: BoxFit.fill,
+                      ),
+                      borderRadius: BorderRadius.circular(15)),
+                ),
+              ),
+              Expanded(
+                child: Container(
+                  child: Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.max,
+                      // mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "${placesModel.name}",
+                          // textDirection: TextDirection.rtl,
+                          style: TextStyle(
+                            color: Colors.blue,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
                           ),
-                          borderRadius: BorderRadius.circular(15)),
-                    ),
-                  ),
-                  Expanded(
-                    child: Container(
-                      child: Padding(
-                        padding: const EdgeInsets.all(15.0),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.max,
-                          // mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                        ),
+                        Text("${placesModel.description}",
+                            // textDirection: TextDirection.rtl,
+                            maxLines: 2,
+                            style: TextStyle(
+                              color: Colors.yellow,
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            )),
+                        Spacer(),
+                        Row(
                           children: [
-                            Text(
-                              "${placesModel.name}",
-                              // textDirection: TextDirection.rtl,
-                              style: TextStyle(
-                                color: Colors.blue,
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
+                            TextButton(
+                              onPressed: () {
+                                cubit.getPlace(placesModel.id, context);
+                              },
+                              child: Text(
+                                'See More',
+                                style: TextStyle(fontSize: 16),
                               ),
-
                             ),
-                            Text("${placesModel.description}",
-                                // textDirection: TextDirection.rtl,
-                                maxLines: 2,
-                                style: TextStyle(
-                                  color: Colors.yellow,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                )),
                             Spacer(),
-                            Row(
-                              children: [
-                                TextButton(
-                                  onPressed: (){},
-                                  child: Text('See More',
-                                    style: TextStyle(fontSize: 16),),
-                                ),
-                                Spacer(),
-                                Icon(Icons.favorite)
-                              ],
-                            ),
-
                           ],
                         ),
-                      ),
+                      ],
                     ),
                   ),
-                ],
-              )),
+                ),
+              ),
+            ],
+          ),
         ),
-      );
+      ),
+    );
   }
 }

@@ -21,7 +21,20 @@ String serialNum;
 var random;
 String uId = '';
 String HotelID = '';
+String RestID = '';
+String RentID = '';
 int tarek;
-bool disable=false;
-String book='Book Now';
-Color color=Colors.white;
+int countServices=0;
+int countUsers=0;
+
+bool disableRest=false;
+String bookRest='Book Now';
+Color colorRest=Colors.white;
+
+bool disableHotels=false;
+String bookHotels='Book Now';
+Color colorHotels=Colors.white;
+
+bool disableRent=false;
+String bookRent='Book Now';
+Color colorRent=Colors.white;

@@ -51,7 +51,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => JoyCubit()..getUserData()..getAllHotel()
-        ..getAllRestaurant()..getAllPlaces()..getAllRents(),
+        ..getAllRestaurant()..getAllPlaces()..getAllRents()..countService()..getAllUsers(),
       child: BlocConsumer<JoyCubit,JoyStates>(
         listener: (context, state) {},
         builder: (context, state) {
