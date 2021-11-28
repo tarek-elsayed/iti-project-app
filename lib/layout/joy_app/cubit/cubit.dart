@@ -53,12 +53,12 @@ class JoyCubit extends Cubit<JoyStates> {
     emit(HomeChangeBottomNavState());
   }
 
-  updateRent(String id){
+  updateRent(String id) {
     print(";;$id");
-    RentID=id;
+    RentID = id;
     print(";;$RentID");
 
-    RentModel GG=RentModel(
+    RentModel GG = RentModel(
       id: id,
       servicePhone: rentModel.servicePhone,
       serviceName: rentModel.serviceName,
@@ -73,20 +73,18 @@ class JoyCubit extends Cubit<JoyStates> {
       servicePrice: rentModel.servicePrice,
       usersID: [],
     );
-    FirebaseFirestore.instance.collection('Rent').doc(RentID)
-        .update(GG.toMap()).then((value){
+    FirebaseFirestore.instance
+        .collection('Rent')
+        .doc(RentID)
+        .update(GG.toMap())
+        .then((value) {
       print("Update Rent");
     });
   }
 
-
-
-
-
   List<UserModel> userModel = [];
 
   getAllUsers() {
-
     FirebaseFirestore.instance.collection("Users").get().then((value) {
       value.docs.forEach((element) {
         userModel.add(UserModel.fromJson(element.data()));
@@ -173,8 +171,11 @@ class JoyCubit extends Cubit<JoyStates> {
     print(id);
     emit(JoyLoadingGetHotelsState());
 
-    FirebaseFirestore.instance.collection("Hotels").doc(HotelID).get().then((
-        value) {
+    FirebaseFirestore.instance
+        .collection("Hotels")
+        .doc(HotelID)
+        .get()
+        .then((value) {
       hotelModel = HotelModel.fromJson(value.data(), value.id);
       print('value ${value.id}');
       emit(JoySuccessGetHotelsState(hotelModel));
@@ -204,13 +205,15 @@ class JoyCubit extends Cubit<JoyStates> {
   RestaurantModel restaurantModel;
 
   void getRestaurant(id, context) {
+
+    RestID=id;
     emit(JoyLoadingGetRestaurantState());
     FirebaseFirestore.instance
         .collection("Restaurants")
         .doc(id)
         .get()
         .then((value) {
-      restaurantModel = RestaurantModel.fromJson(value.data());
+      restaurantModel = RestaurantModel.fromJson(value.data(),value.id);
       emit(JoySuccessGetRestaurantState(restaurantModel));
       navigateTo(context, RestaurantDetailScreen(restaurantModel));
     }).catchError((error) {
@@ -281,8 +284,12 @@ class JoyCubit extends Cubit<JoyStates> {
     print("???$RentID");
     // updateRent(RentID);
     emit(JoyLoadingGetRentState());
-    FirebaseFirestore.instance.collection("Rent").doc(RentID).get().then((value) {
-      rentModel = RentModel.fromJson(value.data());
+    FirebaseFirestore.instance
+        .collection("Rent")
+        .doc(RentID)
+        .get()
+        .then((value) {
+      rentModel = RentModel.fromJson(value.data(),value.id);
       updateRent(id);
       emit(JoySuccessGetRentState(rentModel));
 
@@ -315,10 +322,7 @@ class JoyCubit extends Cubit<JoyStates> {
   void uploadImage() {
     firebase_storage.FirebaseStorage.instance
         .ref()
-        .child('Users/${Uri
-        .file(profileImage.path)
-        .pathSegments
-        .last}')
+        .child('Users/${Uri.file(profileImage.path).pathSegments.last}')
         .putFile(profileImage)
         .then((value) {
       value.ref.getDownloadURL().then((value) {
@@ -341,7 +345,7 @@ class JoyCubit extends Cubit<JoyStates> {
     return serialNum;
   }
 
-  generateBarCode(BuildContext context) {
+  generateBarCode([BuildContext context]) {
     random = Random().nextDouble() * 555555555555;
     random = (random.toInt() % random).toInt();
     tarek = random;
@@ -355,7 +359,8 @@ class JoyCubit extends Cubit<JoyStates> {
 
   safeBarcode(barCode, serialNum) async {
     // generateBarCode();
-    restBarcodes = [];
+
+print("YYY $RestID");
     restBarcode = Barcodes(barcode: barCode, serialNum: serialNum);
     if (model.barcodes != null) {
       restBarcodes.add(restBarcode);
@@ -381,7 +386,8 @@ class JoyCubit extends Cubit<JoyStates> {
       disableRest = true;
       bookRest = 'Booked';
       colorRest = Colors.grey[800];
-      saveBarcodeRest(random, model.uId);
+      saveIdREst(uId);
+      // saveBarcodeRest(random, model.uId);
       print('success');
     });
   }
@@ -454,8 +460,7 @@ class JoyCubit extends Cubit<JoyStates> {
               isEmailVerified: model.isEmailVerified,
               barcodes: barCodeChange,
               orderHotels: model.orderHotels,
-              orderRent: model.orderRent
-          );
+              orderRent: model.orderRent);
 
           FirebaseFirestore.instance
               .collection("Users")
@@ -559,7 +564,6 @@ class JoyCubit extends Cubit<JoyStates> {
         createdAt: hotelModel.createdAt,
         serviceDescripition: hotelModel.serviceDescripition,
         servicePrice: hotelModel.servicePrice,
-
       );
       FirebaseFirestore.instance
           .collection('Hotels')
@@ -706,13 +710,14 @@ class JoyCubit extends Cubit<JoyStates> {
   BarcodesRest barcodeRest;
 
   saveBarcodeRest(int barcode, String userID) {
+    print("EEE $RestID");
     barcodeRest = BarcodesRest(barcode: barcode, userId: userID);
     if (restaurantModel.barcodes != null) {
       barcodesRest.add(barcodeRest);
     } else {
       barcodesRest = restaurantModel.barcodes;
     }
-    RestaurantModel restModel = RestaurantModel(
+    RestaurantModel EE = RestaurantModel(
       barcodes: barcodesRest,
       id: restaurantModel.id,
       servicePrice: restaurantModel.servicePrice,
@@ -728,10 +733,11 @@ class JoyCubit extends Cubit<JoyStates> {
       booked: restaurantModel.booked,
       mealCatgory: restaurantModel.mealCatgory,
     );
+    print('HHHH $RestID');
     FirebaseFirestore.instance
         .collection("Restaurants")
-        .doc(RestID)
-        .update(restModel.toMap())
+        .doc(serialNum)
+        .update(EE.toMap())
         .then((value) {
       print('Done');
     });
@@ -757,8 +763,11 @@ class JoyCubit extends Cubit<JoyStates> {
       servicePrice: hotelModel.servicePrice,
       usersID: hotelsId,
     );
-    FirebaseFirestore.instance.collection('Hotels').doc(HotelID).
-    update(DD.toMap()).then((value) {
+    FirebaseFirestore.instance
+        .collection('Hotels')
+        .doc(HotelID)
+        .update(DD.toMap())
+        .then((value) {
       print('send id hotel');
       getAllHotel();
     });
@@ -784,8 +793,11 @@ class JoyCubit extends Cubit<JoyStates> {
       servicePrice: rentModel.servicePrice,
       usersID: rentsId,
     );
-    FirebaseFirestore.instance.collection('Rent').doc(RentID).
-    update(QQ.toMap()).then((value) {
+    FirebaseFirestore.instance
+        .collection('Rent')
+        .doc(RentID)
+        .update(QQ.toMap())
+        .then((value) {
       print('send id rent');
       getAllHotel();
     });
@@ -826,8 +838,11 @@ class JoyCubit extends Cubit<JoyStates> {
       servicePrice: hotelModel.servicePrice,
       usersID: newHotelId,
     );
-    FirebaseFirestore.instance.collection('Hotels').doc(HotelID).
-    update(DD.toMap()).then((value) {
+    FirebaseFirestore.instance
+        .collection('Hotels')
+        .doc(HotelID)
+        .update(DD.toMap())
+        .then((value) {
       print('send id hotel');
       getAllHotel();
       showOrderHotels();
@@ -857,6 +872,7 @@ class JoyCubit extends Cubit<JoyStates> {
   List newRentId;
   List newRentID;
   int newCountRent;
+
   deleteIdRentUsers(String userId, String serviceId, [context]) {
     newRentId = [];
 
@@ -888,8 +904,11 @@ class JoyCubit extends Cubit<JoyStates> {
       servicePrice: rentModel.servicePrice,
       usersID: newRentId,
     );
-    FirebaseFirestore.instance.collection('Rent').doc(RentID).
-    update(DD.toMap()).then((value) {
+    FirebaseFirestore.instance
+        .collection('Rent')
+        .doc(RentID)
+        .update(DD.toMap())
+        .then((value) {
       print('send id hotel');
       getAllHotel();
       showOrderHotels();
@@ -916,8 +935,36 @@ class JoyCubit extends Cubit<JoyStates> {
     });
   }
 
-}
+  List restId;
 
+  saveIdREst(String usersId) {
+    print('NNN $usersId');
+    print('NNN $RestID');
+    rentsId = [];
+    rentsId.add(usersId);
+    RestaurantModel NN = RestaurantModel(
+      id: RestID,
+      servicePhone: restaurantModel.servicePhone,
+      serviceName: restaurantModel.serviceName,
+      offerRatio: restaurantModel.offerRatio,
+      offerd: restaurantModel.offerd,
+      brandName: restaurantModel.brandName,
+      imagePath: restaurantModel.imagePath,
+      createdBy: restaurantModel.createdBy,
+      createdAt: restaurantModel.createdAt,
+      serviceDescripition: restaurantModel.serviceDescripition,
+      servicePrice: restaurantModel.servicePrice,
+      usersID: rentsId,
+      barcodes: restaurantModel.barcodes,
+      mealCatgory: restaurantModel.mealCatgory,
+      booked: restaurantModel.booked
+    );
+  FirebaseFirestore.instance.collection('Restaurants').doc(RestID).update(NN.toMap())
+      .then((value){
+    print('Ready');
+  });
+  }
+}
 
 /*
 RestaurantModel resModel = RestaurantModel(

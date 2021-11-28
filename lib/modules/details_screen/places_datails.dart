@@ -100,14 +100,14 @@ class _PlaceScreenState extends State<PlaceScreen> {
                               title: "Details",
                               subtitle: "${place.details}",
                             ),
-                            titleDetails(
-                              title: "Price",
-                              subtitle: "${place.price[0]}/Pound , ${place.price[1]}/Doller",
-                            ),
-                            titleDetails(
-                              title: "Price For Sound and Light",
-                              subtitle: "${place.address}",
-                            ),
+                            place.price!=null?titleDetails(
+                              title: "Price For Egyptian",
+                              subtitle: "${place.price[0]} جنيه",
+                            ):Container(),
+                            place.price!=null?titleDetails(
+                              title: "Price For Foreigner",
+                              subtitle: "${place.price[1]} دولار ",
+                            ):Container(),
                           ],
                         ),
                       ),
@@ -184,9 +184,9 @@ class _PlaceScreenState extends State<PlaceScreen> {
           subtitle: Text(
             "$subtitle",
             style: TextStyle(
-              color: Colors.black87,
-              fontSize: 21,
-              fontWeight: FontWeight.w400,
+              color: Colors.deepOrangeAccent[700],
+              fontSize: 22,
+              fontWeight: FontWeight.bold,
             ),
             textDirection: TextDirection.rtl,
 

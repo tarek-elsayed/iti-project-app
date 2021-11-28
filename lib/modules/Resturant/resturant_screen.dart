@@ -57,7 +57,8 @@ class ResturantScreen extends StatelessWidget {
         onTap: () {
           // JoyCubit.get(context).checkBarcode(restaurantModel.id);
           RestID = restaurantModel.id;
-          // print("hotelModel ${hotelModel.id}");
+          print("hotelModel ${restaurantModel.id}");
+          print("hotelModel ${RestID}");
           JoyCubit.get(context).createSerialNum(restaurantModel.id);
           JoyCubit.get(context).checkBarcode(RestID);
           cubit.getRestaurant(RestID, context);

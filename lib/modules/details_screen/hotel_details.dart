@@ -229,57 +229,7 @@ class _HotelDetailScreen extends State<HotelDetailScreen> {
                           ),
                         ),
                       ),
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: RaisedButton(
-                            color: Colors.white,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(5.0)),
-                            padding: const EdgeInsets.all(10.0),
-                            onPressed: () => showDialog(
-                              context: context,
-                              builder: (context) => AlertDialog(
-                                title: Text("Rate This App"),
-                                content: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Text(
-                                      "Please leave a star rating",
-                                    ),
-                                    SizedBox(
-                                      height: 15.0,
-                                    ),
-                                    RatingBar.builder(
-                                        maxRating: 1,
-                                        itemBuilder: (context, _) => Icon(
-                                              Icons.star,
-                                              color: Colors.amber,
-                                            ),
-                                        onRatingUpdate: (rating) {
-                                          this.x = rating;
-                                          print(x);
-                                        })
-                                  ],
-                                ),
-                                actions: [
-                                  TextButton(
-                                    onPressed: () {
-                                      Navigator.pop(context);
-                                    },
-                                    child: Text("OK"),
-                                  )
-                                ],
-                              ),
-                            ),
-                            child: Text(
-                              "Rate US",
-                              style: TextStyle(
-                                  fontSize: 25, fontWeight: FontWeight.w700),
-                            ),
-                          ),
-                        ),
-                      ),
+
                     ],
                   )
                 ],

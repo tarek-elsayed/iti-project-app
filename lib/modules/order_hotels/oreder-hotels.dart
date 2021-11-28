@@ -149,7 +149,7 @@ class OrderHotelsScreen extends StatelessWidget {
                                 icon: Icon(Icons.delete),
                                 onPressed: () {
                                   cubit.deleteIdHotelUsers(
-                                      uId, hotelModel.ID, context);
+                                      uId, hotelModel.Id, context);
                                 })
                           ],
                         ),

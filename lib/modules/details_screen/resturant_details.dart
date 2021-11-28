@@ -112,7 +112,7 @@ class _RestaurantDetailScreen extends State<RestaurantDetailScreen> {
                                     const EdgeInsets.only(left: 8.0),
                                     child: IconButton(
                                       padding: EdgeInsets.only(left: 10.0),
-                                      icon: Icon(Icons.delete_forever),
+                                      icon: Icon(Icons.delete_forever,color: Colors.red,),
                                       onPressed: () {
                                         setState(() {
                                           List<Barcodes> barCodeChange = [];
@@ -282,6 +282,7 @@ class _RestaurantDetailScreen extends State<RestaurantDetailScreen> {
                                     ElevatedButton(
                                       onPressed: () {
                                         setState(() {
+                                          RestID=restaurantModel.id;
                                           JoyCubit.get(context).generateBarCode(context);
                                           JoyCubit.get(context).safeBarcode(random,serialNum);
                                           Navigator.pop(context);
@@ -321,57 +322,7 @@ class _RestaurantDetailScreen extends State<RestaurantDetailScreen> {
                       ),
                     ),
                   ),
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: RaisedButton(
-                        color: Colors.white,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(5.0)),
-                        padding: const EdgeInsets.all(10.0),
-                        onPressed: () => showDialog(
-                          context: context,
-                          builder: (context) => AlertDialog(
-                            title: Text("Rate This App"),
-                            content: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Text(
-                                  "Please leave a star rating",
-                                ),
-                                SizedBox(
-                                  height: 15.0,
-                                ),
-                                RatingBar.builder(
-                                    maxRating: 1,
-                                    itemBuilder: (context, _) => Icon(
-                                      Icons.star,
-                                      color: Colors.amber,
-                                    ),
-                                    onRatingUpdate: (rating) {
-                                      this.x = rating;
-                                      print(x);
-                                    })
-                              ],
-                            ),
-                            actions: [
-                              TextButton(
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                                child: Text("OK"),
-                              )
-                            ],
-                          ),
-                        ),
-                        child: Text(
-                          "Rate US",
-                          style: TextStyle(
-                              fontSize: 25, fontWeight: FontWeight.w700),
-                        ),
-                      ),
-                    ),
-                  ),
+
                 ],
               )
             ],

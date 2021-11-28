@@ -36,9 +36,11 @@
 //   }
 // }
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:jooy/models/user_model.dart';
 
 class RestaurantModel {
   String id;
+  String Id;
   String serviceName;
   String servicePhone;
   String servicePrice;
@@ -52,8 +54,8 @@ class RestaurantModel {
   String imagePath ;
   bool booked;
   String mealCatgory;
-  List <BarcodesRest> barcodes;
-
+  List<BarcodesRest> barcodes;
+  List usersID;
 
   RestaurantModel({
     this.id,
@@ -70,11 +72,12 @@ class RestaurantModel {
     this.booked,
     this.mealCatgory,
     this.barcodes,
+    this.usersID,
   });
 
-  RestaurantModel.fromJson(Map<String, dynamic> json, [String ID]) {
+  RestaurantModel.fromJson(Map<String, dynamic> json, [ID]) {
     id = ID;
-    // id=json['id'];
+    ID=json['id'];
     serviceName = json['serviceName'];
     servicePhone = json['servicePhone'];
     servicePrice = json['servicePrice'];
@@ -87,6 +90,8 @@ class RestaurantModel {
     brandName=json['brandName'];
     booked=json['booked'];
     mealCatgory=json['mealCatgory'];
+    // barcodes=json['Barcodes'];
+    usersID=json['usersID'];
     if (json['Barcodes'] != null) {
       barcodes = new List<BarcodesRest>() ;
       json['Barcodes'].forEach((v) {
@@ -110,7 +115,8 @@ class RestaurantModel {
     data['brandName']=this.brandName;
     data['booked']=this.booked;
     data['mealCatgory']=this.mealCatgory;
-
+    // data['Barcodes']=this.barcodes;
+    data['usersID']=this.usersID;
     if (this.barcodes != null) {
       data['Barcodes'] = this.barcodes.map((v) => v.toMap()).toList();
     }

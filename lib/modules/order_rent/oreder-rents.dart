@@ -150,7 +150,7 @@ class OrderRentsScreen extends StatelessWidget {
                                 icon: Icon(Icons.delete),
                                 onPressed: () {
                                   cubit.deleteIdRentUsers(
-                                      uId, orderModel.ID, context);
+                                      uId, orderModel.Id, context);
                                 })
                           ],
                         ),

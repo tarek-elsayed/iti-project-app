@@ -18,7 +18,7 @@ class JoyLayout extends StatelessWidget {
           drawer: drawer(context),
           appBar: AppBar(
             elevation: 0,
-            // backgroundColor: Color(0xffF9F9F9),
+            backgroundColor: Colors.blue.shade900,
             // backgroundColor: Colors.black,
             centerTitle: true,
             title: Text(
@@ -39,14 +39,14 @@ class JoyLayout extends StatelessWidget {
             currentIndex: cubit.currentIndex,
             items: [
               BottomNavigationBarItem(
-                backgroundColor: Colors.blue,
+                backgroundColor: Colors.blue[900],
                 icon: cubit.currentIndex == 0
                     ? Icon(
                         Icons.place,
                         color: cubit.currentIndex == 0
                             ? Colors.white
                             : Colors.black,
-                        size: 26,
+                        size: 28,
                       )
                     : Icon(
                         Icons.place_outlined,
@@ -57,14 +57,14 @@ class JoyLayout extends StatelessWidget {
                 label: "",
               ),
               BottomNavigationBarItem(
-                backgroundColor: Colors.blue,
+                backgroundColor: Colors.blue[900],
                 icon: cubit.currentIndex == 1
                     ? Icon(
                         Icons.hotel,
                         color: cubit.currentIndex == 1
                             ? Colors.white
                             : Colors.black,
-                        size: 26,
+                  size: 28,
                       )
                     : Icon(
                         Icons.hotel_outlined,
@@ -75,14 +75,14 @@ class JoyLayout extends StatelessWidget {
                 label: "",
               ),
               BottomNavigationBarItem(
-                backgroundColor: Colors.blue,
+                backgroundColor: Colors.blue[900],
                 icon: cubit.currentIndex == 2
                     ? Icon(
                         Icons.restaurant,
                         color: cubit.currentIndex == 2
                             ? Colors.white
                             : Colors.black,
-                        size: 28,
+                        size: 30,
                       )
                     : Icon(
                         Icons.restaurant_outlined,
@@ -94,14 +94,14 @@ class JoyLayout extends StatelessWidget {
                 label: "",
               ),
               BottomNavigationBarItem(
-                backgroundColor: Colors.blue,
+                backgroundColor: Colors.blue[900],
                 icon: cubit.currentIndex == 3
                     ? Icon(
                         Icons.home,
                         color: cubit.currentIndex == 3
                             ? Colors.white
                             : Colors.black,
-                        size: 26,
+                  size: 28,
                       )
                     : Icon(
                         Icons.home_outlined,
@@ -112,14 +112,14 @@ class JoyLayout extends StatelessWidget {
                 label: "",
               ),
               BottomNavigationBarItem(
-                backgroundColor: Colors.blue,
+                backgroundColor: Colors.blue[900],
                 icon: cubit.currentIndex == 4
                     ? Icon(
                         Icons.person,
                         color: cubit.currentIndex == 4
                             ? Colors.white
                             : Colors.black,
-                        size: 26,
+                  size: 28,
                       )
                     : Icon(
                         Icons.person_outline,
@@ -183,7 +183,7 @@ class JoyLayout extends StatelessWidget {
                   JoyCubit.get(context).changeBottom(value);
                   Navigator.pop(context);
                 },
-                leading: Icon(Icons.person),
+                leading: Icon(Icons.person,color: Colors.white,size: 40,),
                 title: Text(
                   "Profile",
                   style: TextStyle(
@@ -192,7 +192,7 @@ class JoyLayout extends StatelessWidget {
                       fontWeight: FontWeight.bold),
                 )),
             ListTile(
-                leading: Icon(Icons.favorite),
+                leading: Icon(Icons.favorite,color: Colors.red[900],size: 40,),
                 title: Text(
                   "Orders",
                   style: TextStyle(
@@ -212,7 +212,7 @@ class JoyLayout extends StatelessWidget {
                 JoyCubit.get(context).countService();
                 JoyCubit.get(context).countUser();
               },
-              leading: Icon(Icons.book),
+              leading: Icon(Icons.book,color: Colors.grey[400],size: 40,),
               title: Text(
                 "About Us",
                 style: TextStyle(
@@ -225,7 +225,7 @@ class JoyLayout extends StatelessWidget {
               onTap: () {
                 signOut(context);
               },
-              leading: Icon(Icons.logout),
+              leading: Icon(Icons.logout,size: 40,color: Colors.lightGreenAccent[400],),
               title: Text(
                 "logout",
                 style: TextStyle(

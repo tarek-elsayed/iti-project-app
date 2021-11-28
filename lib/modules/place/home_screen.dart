@@ -106,23 +106,23 @@ class Place extends StatelessWidget {
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       // mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         Text(
                           "${placesModel.name}",
-                          // textDirection: TextDirection.rtl,
+                          textDirection: TextDirection.rtl,
                           style: TextStyle(
-                            color: Colors.blue,
+                            color: Color(0xff265AA9),
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                         Text("${placesModel.description}",
-                            // textDirection: TextDirection.rtl,
+                            textDirection: TextDirection.rtl,
                             maxLines: 2,
                             style: TextStyle(
-                              color: Colors.yellow,
-                              fontSize: 18,
+                              color: Colors.deepOrangeAccent[700],
+                              fontSize: 20,
                               fontWeight: FontWeight.bold,
                             )),
                         Spacer(),
@@ -134,7 +134,7 @@ class Place extends StatelessWidget {
                               },
                               child: Text(
                                 'See More',
-                                style: TextStyle(fontSize: 16),
+                                style: TextStyle(fontSize: 16,color: Color(0xff265AA9)),
                               ),
                             ),
                             Spacer(),
